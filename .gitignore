@@ -1,2 +1,4 @@
 .env
 /node_modules
+AllSets.json
+AllSetsFormatted.json
