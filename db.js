@@ -2,7 +2,7 @@ var express = require('express');
 var pgp = require('pg-promise')( /*options*/ )
 pgp.pg.defaults.ssl = true;
 var db ={};
-var database = pgp("postgres://nolan@localhost:5432/magicInventory");
+var database = pgp(process.env.DATABASE_URL);
 
 db.getCards = function(queryParams, callback) {
   database.many('SELECT FROM magic_cards WHERE name = $1)', queryParams.name)
