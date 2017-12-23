@@ -9,6 +9,7 @@
   "author": "Nolan Aguirre",
   "license": "ISC",
   "dependencies": {
+    "body-parser": "^1.18.2",
     "cors": "^2.8.1",
     "dotenv": "^4.0.0",
     "express": "^4.14.0",
