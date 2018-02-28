@@ -7,8 +7,8 @@ const jwtAuthz = require('express-jwt-authz');
 const jwksRsa = require('jwks-rsa');
 const cors = require('cors');
 const db = require('./db')
-
-// db.updateSets(JSON.parse(fs.readFileSync('AllSetsFormatted.json', 'utf8')));
+const fs = require('fs');
+//db.createDatabased();
 if (!process.env.AUTH0_DOMAIN || !process.env.AUTH0_AUDIENCE) {
     throw 'Make sure you have AUTH0_DOMAIN, and AUTH0_AUDIENCE in your .env file'
 }
@@ -41,35 +41,19 @@ app.get('/api/public', function(req, res) {
 });
 
 app.post('/api/typeahead', function(req, res) {
-    console.log(req.body)
-    db.typeahead(req.body.queryParams, function(data){
-        if(data){
-            res.json(data.slice(0,10));
+    db.typeahead(req.body.queryParams).then(
+        function(data){
+            if (data) {
+                res.json(data.slice(0, 10));
+            }
         }
-    })
-});
-
-app.get('/api/typeahead', function(req, res) {
-    res.json({
-        message: "Hello from a public endpoint! You don't need to be authenticated to see this."
-    });
+    )
 });
 
 app.post('/api/search', function(req, res) {
-    function formatString(set, name){
-        return set.replace(/[^a-zA-Z\d\s]/g, "").replace(/ /g, '+') + '/' + name.replace(/[^a-zA-Z\d\s]/g, "").replace(/ /g, '+');
-    }
     console.log(req.body.queryParams);
-    db.getCards(req.body.queryParams, function(data) {
-        if (data) {
-            data.forEach(function(card) {
-                //  https://magic-price-api.herokuapp.com/
-                card.url = "http://localhost:3002/" + formatString(card.set, card.name);
-            })
-            res.json(data)
-        } else {
-            res.json(null);
-        }
+    db.getCards(req.body.queryParams).then(function(data) {
+        res.json(data)
     })
 });
 
