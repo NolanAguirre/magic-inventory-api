@@ -51,9 +51,13 @@ app.post('/api/typeahead', function(req, res) {
 });
 
 app.post('/api/search', function(req, res) {
-    console.log(req.body.queryParams);
     db.getCards(req.body.queryParams).then(function(data) {
         res.json(data)
+    })
+});
+app.post('/api/inventory/add', function(req, res) {
+    db.addToInventory(req.body.queryParams).then(function(data) {
+        res.status(200);
     })
 });
 
