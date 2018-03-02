@@ -52,17 +52,6 @@ app.post('/api/search', checkJwt, function(req, res) {
     })
 });
 app.post('/api/role', checkJwt, function(req, res) {
-    db.checkRole(req.user.stub).then(function(data) {
-        res.json(data)
-    })
-});
-app.post('/api/inventory/add', checkJwt, function(req, res) {
-    db.addToInventory(req.body.queryParams).then(function(data) {
-        res.status(200);
-    })
-});
-
-app.post('/api/admin', checkJwt, function(req, res) {
     db.checkRole(req.body.stub, 'admin')
         .then(function(roleData){
             if(roleData != 'user'){
@@ -82,6 +71,15 @@ app.post('/api/admin', checkJwt, function(req, res) {
                 res.json(roleData);
             }
         })
+});
+app.post('/api/inventory/add', checkJwt, function(req, res) {
+    db.addToInventory(req.body.queryParams).then(function(data) {
+        res.status(200);
+    })
+});
+
+app.post('/api/admin', checkJwt, function(req, res) {
+
 });
 
 app.listen(3001);
