@@ -3,10 +3,9 @@ const app = express();
 require('dotenv').config()
 const jwt = require('express-jwt');
 const bodyParser = require('body-parser');
-const jwtAuthz = require('express-jwt-authz');
 const jwksRsa = require('jwks-rsa');
 const cors = require('cors');
-const db = require('./db')
+const db = require('./db');
 const fs = require('fs');
 //db.createDatabased();
 if (!process.env.AUTH0_DOMAIN || !process.env.AUTH0_AUDIENCE) {
@@ -31,9 +30,6 @@ const checkJwt = jwt({
     algorithms: ['RS256']
 });
 
-const checkScopes = jwtAuthz(['read:messages']);
-const checkScopesAdmin = jwtAuthz(['write:messages']);
-
 app.get('/api/public', function(req, res) {
     res.json({
         message: "Hello from a public endpoint! You don't need to be authenticated to see this."
@@ -50,27 +46,42 @@ app.post('/api/typeahead', function(req, res) {
     )
 });
 
-app.post('/api/search', function(req, res) {
+app.post('/api/search', checkJwt, function(req, res) {
     db.getCards(req.body.queryParams).then(function(data) {
         res.json(data)
     })
 });
-app.post('/api/inventory/add', function(req, res) {
+app.post('/api/role', checkJwt, function(req, res) {
+    db.checkRole(req.user.stub).then(function(data) {
+        res.json(data)
+    })
+});
+app.post('/api/inventory/add', checkJwt, function(req, res) {
     db.addToInventory(req.body.queryParams).then(function(data) {
         res.status(200);
     })
 });
 
-app.get('/api/private', checkJwt, checkScopes, function(req, res) {
-    res.json({
-        message: "Hello from a private endpoint! You need to be authenticated and have a scope of read:messages to see this."
-    });
-});
-
-app.post('/api/admin', checkJwt, checkScopesAdmin, function(req, res) {
-    res.json({
-        message: "Hello from an admin endpoint! You need to be authenticated and have a scope of write:messages to see this."
-    });
+app.post('/api/admin', checkJwt, function(req, res) {
+    db.checkRole(req.body.stub, 'admin')
+        .then(function(roleData){
+            if(roleData != 'user'){
+                let queryParams = {
+                    queryParams:{
+                        userId: req.body.stub
+                    }
+                }
+                db.getStore(queryParams).then(function(storeData){
+                    let temp = {
+                        store: storeData,
+                        role: roleData
+                    }
+                    res.json(temp);
+                })
+            }else{
+                res.json(roleData);
+            }
+        })
 });
 
 app.listen(3001);
