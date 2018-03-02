@@ -4,7 +4,38 @@ pgp.pg.defaults.ssl = true;
 var db = {};
 const fs = require('fs');
 var database = pgp(process.env.DATABASE_URL);
-
+db.checkRole = function(user){
+    return database.one('SELECT 1 FROM users WHERE id = $1', user.id)
+        .then(function(data){
+            return data.role;
+        }.catch(function(data){
+            db.addUser(user)
+            return 'user';
+        })
+    )
+}
+db.addUser = function(user){
+    database.none('INSERT INTO users (name, email, id, role) VALUES ($1, $2, $3, $4)', [user.name, user.email, user.id, 'user'])
+}
+db.getStore = function(queryParams){
+    let queryString;
+    let queryValues;
+    if(queryParams.storeId){
+        queryString = 'SELECT 1 FROM stores WHERE storeid = $1';
+        queryValues = [queryParams.storeId];
+    }else if(queryParams.userId){
+        queryString = 'SELECT 1 FROM stores WHERE admins @> ARRAY[$1]';
+        queryValues = [queryParams.userId];
+    }
+    return database.one(queryString, queryValues)
+    .then(function(data){
+        delete data.serversettings;
+        delete data.admins;
+        return data;
+    }).catch(function(err){
+        return null;
+    })
+}
 db.queryInvetory = function(queryParams){
     return database.many('SELECT * FROM inventory WHERE cardname = $1 AND storeid = $2', [queryParams.card.name, queryParams.store.id])
         .then(function(data){
@@ -16,18 +47,16 @@ db.queryInvetory = function(queryParams){
 db.addToInventory = function(queryParams){
     let updateString;
     let updateValues;
-    database.one('SELECT * FROM inventory WHERE cardname = $1 AND storeid = $2 AND set = $3 AND foil = $4',  [queryParams.card.name, queryParams.store.id, queryParams.card.set, queryParams.card.foil])
+    database.one('SELECT 1 FROM inventory WHERE cardname = $1 AND storeid = $2 AND set = $3 AND foil = $4',
+                 [queryParams.card.name, queryParams.store.id, queryParams.card.set, queryParams.card.foil])
     .then(function(data){
-        if(data !=null){
-            updateString = 'UPDATE inventory SET quantity = $5 WHERE cardname = $1 AND storeid = $2 AND set = $3 AND foil = $4';
-            updateValues = [queryParams.card.name, queryParams.store.id, queryParams.card.set, queryParams.card.foil, queryParams.card.quantity];
-        }else{
-            updateString = 'INSERT INTO inventory VALUES (cardname, storeid, set, foil, quantity)';
-            updateValues = [queryParams.card.name, queryParams.store.id, queryParams.card.set, queryParams.card.quantity]
-        }
+        updateString = 'UPDATE inventory SET quantity = $5 WHERE cardname = $1 AND storeid = $2 AND set = $3 AND foil = $4';
+        updateValues = [queryParams.card.name, queryParams.store.id, queryParams.card.set, queryParams.card.foil, queryParams.card.quantity];
     }).catch(function(err){
-        return err
+        updateString = 'INSERT INTO inventory VALUES (cardname, storeid, set, foil, quantity), ($1,$2,$3,$4,$5)';
+        updateValues = [queryParams.card.name, queryParams.store.id, queryParams.card.set, queryParams.card.foil, queryParams.card.quantity];
     })
+    database.none(updateString, updateValues)
 }
 
 db.getCards = function(queryParams) {
@@ -40,12 +69,12 @@ db.getCards = function(queryParams) {
         queryString = 'SELECT * FROM magic_cards WHERE setcode = $1 AND collectorsnumber = $2';
         queryValues = [queryParams.setcode, queryParams.collectorsnumber];
     }
-    return database.many(queryString, queryValues)
+    return database.manyOrNone(queryString, queryValues)
        .then(function(data) {
          return data;
        })
        .catch(function(err) {
-         return null;
+         return ;
        });
 }
 
@@ -84,7 +113,8 @@ db.updateSets = function(json) {
       database.one('SELECT EXISTS (SELECT 1 FROM magic_cards WHERE name = $1 AND set = $2)', [card.name, card.set])
         .then(function(data) {
           if (!data.exists) {
-            database.none('INSERT INTO magic_cards (multiverseid, name, set, variations, setcode, collectorsnumber) VALUES ($1, $2, $3, $4, $5, $6)', [card.multiverseid, card.name, card.set,card.variations, card.setCode, card.number])
+            database.none('INSERT INTO magic_cards (multiverseid, name, set, variations, setcode, collectorsnumber) VALUES ($1, $2, $3, $4, $5, $6)',
+                         [card.multiverseid, card.name, card.set,card.variations, card.setCode, card.number])
               .then(function() {})
               .catch(function(err) {
                 console.log(err);
