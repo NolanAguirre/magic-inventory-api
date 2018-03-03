@@ -52,12 +52,12 @@ app.post('/api/search', checkJwt, function(req, res) {
     })
 });
 app.post('/api/role', checkJwt, function(req, res) {
-    db.checkRole(req.body.stub)
+    db.checkRole(req.body)
         .then(function(roleData){
             if(roleData != 'user'){
                 let queryParams = {
                     queryParams:{
-                        userId: req.body.stub
+                        userId: req.body.sub
                     }
                 }
                 db.getStore(queryParams).then(function(storeData){
@@ -68,12 +68,21 @@ app.post('/api/role', checkJwt, function(req, res) {
                     res.json(temp);
                 })
             }else{
-                res.json(roleData);
+                let temp = {
+                    store: null,
+                    role: roleData
+                }
+                res.json(temp);
             }
         })
 });
 app.post('/api/inventory/add', checkJwt, function(req, res) {
     db.addToInventory(req.body.queryParams).then(function(data) {
+        res.status(200);
+    })
+});
+app.post('/api/inventory/remove', checkJwt, function(req, res) {
+    db.removeFromInventory(req.body.queryParams).then(function(data) {
         res.status(200);
     })
 });
