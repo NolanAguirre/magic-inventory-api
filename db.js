@@ -20,10 +20,10 @@ db.getStore = function(queryParams){
     let queryString;
     let queryValues;
     if(queryParams.storeId){
-        queryString = 'SELECT 1 FROM stores WHERE storeid = $1';
+        queryString = 'SELECT * FROM stores WHERE storeid = $1';
         queryValues = [queryParams.storeId];
     }else if(queryParams.userId){
-        queryString = 'SELECT 1 FROM stores WHERE admins @> ARRAY[$1]';
+        queryString = 'SELECT * FROM stores WHERE admins @> ARRAY[$1]';
         queryValues = [queryParams.userId];
     }
     return database.one(queryString, queryValues)
@@ -46,7 +46,7 @@ db.queryInvetory = function(queryParams){
 db.addToInventory = function(queryParams){
     let updateString;
     let updateValues;
-    database.one('SELECT 1 FROM inventory WHERE cardname = $1 AND storeid = $2 AND set = $3 AND foil = $4',
+    database.one('SELECT * FROM inventory WHERE cardname = $1 AND storeid = $2 AND set = $3 AND foil = $4',
                  [queryParams.card.name, queryParams.store.id, queryParams.card.set, queryParams.card.foil])
     .then(function(data){
         updateString = 'UPDATE inventory SET quantity = $5 WHERE cardname = $1 AND storeid = $2 AND set = $3 AND foil = $4';
@@ -60,7 +60,7 @@ db.addToInventory = function(queryParams){
 db.removeFromInventory = function(queryParams){
     let updateString;
     let updateValues;
-    database.one('SELECT 1 FROM inventory WHERE cardname = $1 AND storeid = $2 AND set = $3 AND foil = $4',
+    database.one('SELECT * FROM inventory WHERE cardname = $1 AND storeid = $2 AND set = $3 AND foil = $4',
                  [queryParams.card.name, queryParams.store.id, queryParams.card.set, queryParams.card.foil])
     .then(function(data){
         updateString = 'UPDATE inventory SET quantity = $5 WHERE cardname = $1 AND storeid = $2 AND set = $3 AND foil = $4';
