@@ -4,18 +4,17 @@ pgp.pg.defaults.ssl = true;
 var db = {};
 const fs = require('fs');
 var database = pgp(process.env.DATABASE_URL);
-db.checkRole = function(user){
-    return database.one('SELECT 1 FROM users WHERE id = $1', user.id)
+db.checkRole = function(user){ // sub = id; nickname = name; name = email;
+    return database.one('SELECT * FROM users WHERE id = $1', user.sub)
         .then(function(data){
             return data.role;
-        }.catch(function(data){
+        }).catch(function(data){
             db.addUser(user)
             return 'user';
         })
-    )
 }
-db.addUser = function(user){
-    database.none('INSERT INTO users (name, email, id, role) VALUES ($1, $2, $3, $4)', [user.name, user.email, user.id, 'user'])
+db.addUser = function(user){ // stub = id; nickname = name; name = email;
+    database.none('INSERT INTO users (name, email, id, role) VALUES ($1, $2, $3, $4)', [user.nickname, user.name, user.sub, 'user'])
 }
 db.getStore = function(queryParams){
     let queryString;
@@ -45,6 +44,20 @@ db.queryInvetory = function(queryParams){
         });
 }
 db.addToInventory = function(queryParams){
+    let updateString;
+    let updateValues;
+    database.one('SELECT 1 FROM inventory WHERE cardname = $1 AND storeid = $2 AND set = $3 AND foil = $4',
+                 [queryParams.card.name, queryParams.store.id, queryParams.card.set, queryParams.card.foil])
+    .then(function(data){
+        updateString = 'UPDATE inventory SET quantity = $5 WHERE cardname = $1 AND storeid = $2 AND set = $3 AND foil = $4';
+        updateValues = [queryParams.card.name, queryParams.store.id, queryParams.card.set, queryParams.card.foil, queryParams.card.quantity];
+    }).catch(function(err){
+        updateString = 'INSERT INTO inventory VALUES (cardname, storeid, set, foil, quantity), ($1,$2,$3,$4,$5)';
+        updateValues = [queryParams.card.name, queryParams.store.id, queryParams.card.set, queryParams.card.foil, queryParams.card.quantity];
+    })
+    database.none(updateString, updateValues)
+}
+db.removeFromInventory = function(queryParams){
     let updateString;
     let updateValues;
     database.one('SELECT 1 FROM inventory WHERE cardname = $1 AND storeid = $2 AND set = $3 AND foil = $4',
