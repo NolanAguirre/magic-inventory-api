@@ -52,7 +52,7 @@ app.post('/api/search', checkJwt, function(req, res) {
     })
 });
 app.post('/api/role', checkJwt, function(req, res) {
-    db.checkRole(req.body.stub, 'admin')
+    db.checkRole(req.body.stub)
         .then(function(roleData){
             if(roleData != 'user'){
                 let queryParams = {

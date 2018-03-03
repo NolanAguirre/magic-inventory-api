@@ -78,7 +78,7 @@ db.getCards = function(queryParams) {
        });
 }
 
-db.typeahead = function(queryParams, callback){
+db.typeahead = function(queryParams){
     let queryString;
     let queryValues;
     if(queryParams.name){
