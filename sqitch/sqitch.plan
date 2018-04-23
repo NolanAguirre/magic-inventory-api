@@ -5,3 +5,4 @@
 appschema 2018-04-23T18:37:08Z Nolan Aguirre <nolanaguirre08@gmail.com> # add app schema for magic-inventory items
 users [appschema] 2018-04-23T18:38:43Z Nolan Aguirre <nolanaguirre08@gmail.com> # Add table of users
 cards [appschema] 2018-04-23T18:54:51Z Nolan Aguirre <nolanaguirre08@gmail.com> # Add table for cards
+types [appschema] 2018-04-23T20:33:33Z Nolan Aguirre <nolanaguirre08@gmail.com> # Add type migration
