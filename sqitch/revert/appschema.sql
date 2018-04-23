@@ -2,6 +2,6 @@
 
 BEGIN;
 
--- XXX Add DDLs here.
+DROP SCHEMA magic_inventory;
 
 COMMIT;
