@@ -7,7 +7,7 @@ const jwksRsa = require('jwks-rsa');
 const cors = require('cors');
 const db = require('./db');
 const fs = require('fs');
-//db.createDatabased();
+db.createDatabased();
 if (!process.env.AUTH0_DOMAIN || !process.env.AUTH0_AUDIENCE) {
     throw 'Make sure you have AUTH0_DOMAIN, and AUTH0_AUDIENCE in your .env file'
 }
@@ -51,7 +51,7 @@ app.post('/api/search', checkJwt, function(req, res) {
         res.json(data)
     })
 });
-app.post('/api/role', checkJwt, function(req, res) {
+app.post('/api/role', checkJwt, function(req, res) { // checks the role
     db.checkRole(req.body)
         .then(function(roleData){
             if(roleData != 'user'){
@@ -76,20 +76,13 @@ app.post('/api/role', checkJwt, function(req, res) {
             }
         })
 });
-app.post('/api/inventory/add', checkJwt, function(req, res) {
+app.post('/api/admin/inventory', checkJwt, function(req, res) {
     db.addToInventory(req.body.queryParams).then(function(data) {
         res.status(200);
     })
 });
-app.post('/api/inventory/remove', checkJwt, function(req, res) {
-    db.removeFromInventory(req.body.queryParams).then(function(data) {
-        res.status(200);
-    })
-});
-
-app.post('/api/admin', checkJwt, function(req, res) {
-
-});
+app.post('/api/admin/orders')
+app.post('/api/admin/settings')
 
 app.listen(3001);
 console.log('Listening on http://localhost:3001');

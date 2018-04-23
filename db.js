@@ -4,14 +4,20 @@ pgp.pg.defaults.ssl = true;
 var db = {};
 const fs = require('fs');
 var database = pgp(process.env.DATABASE_URL);
-db.checkRole = function(user){ // sub = id; nickname = name; name = email;
+db.getUser = function(user){
     return database.one('SELECT * FROM users WHERE id = $1', user.sub)
         .then(function(data){
-            return data.role;
+            return data;
         }).catch(function(data){
             db.addUser(user)
             return 'user';
         })
+}
+db.checkRole = function(user){ // sub = id; nickname = name; name = email;
+    return db.getUser(user).then(function(data){
+        return data.role;
+    }
+    )
 }
 db.addUser = function(user){ // stub = id; nickname = name; name = email;
     database.none('INSERT INTO users (name, email, id, role) VALUES ($1, $2, $3, $4)', [user.nickname, user.name, user.sub, 'user'])
@@ -58,18 +64,21 @@ db.addToInventory = function(queryParams){
     database.none(updateString, updateValues)
 }
 db.removeFromInventory = function(queryParams){
-    let updateString;
-    let updateValues;
-    database.one('SELECT * FROM inventory WHERE cardname = $1 AND storeid = $2 AND set = $3 AND foil = $4',
+    return database.one('SELECT * FROM inventory WHERE cardname = $1 AND storeid = $2 AND set = $3 AND foil = $4',
                  [queryParams.card.name, queryParams.store.id, queryParams.card.set, queryParams.card.foil])
     .then(function(data){
-        updateString = 'UPDATE inventory SET quantity = $5 WHERE cardname = $1 AND storeid = $2 AND set = $3 AND foil = $4';
         updateValues = [queryParams.card.name, queryParams.store.id, queryParams.card.set, queryParams.card.foil, queryParams.card.quantity];
+        if(queryParams.card.quantity != 0){
+            updateString = 'UPDATE inventory SET quantity = $5 WHERE cardname = $1 AND storeid = $2 AND set = $3 AND foil = $4';
+        }else{
+            updateString = 'DELETE FROM inventory WHERE quantity = $5 WHERE cardname = $1 AND storeid = $2 AND set = $3 AND foil = $4';
+        }
+        return database.none(updateString, updateValues).then(function(data){
+            return "Card Updated";
+        })
     }).catch(function(err){
-        updateString = 'INSERT INTO inventory VALUES (cardname, storeid, set, foil, quantity), ($1,$2,$3,$4,$5)';
-        updateValues = [queryParams.card.name, queryParams.store.id, queryParams.card.set, queryParams.card.foil, queryParams.card.quantity];
+        return "Card not found";
     })
-    database.none(updateString, updateValues)
 }
 
 db.getCards = function(queryParams) {
@@ -111,7 +120,7 @@ db.typeahead = function(queryParams){
 }
 
 db.createDatabased = function(){
-    database.none("CREATE TABLE magic_cards (multiverseid integer,name citext,set citext, variations integer[],setcode citext, collectorsnumber integer)")
+    database.none("CREATE TABLE magicinventory.magic_cards (multiverseid integer,name citext,set citext, variations integer[],setcode citext, collectorsnumber integer)")
     .then(function(data){
         db.updateSets(JSON.parse(fs.readFileSync('card_data/AllSetsFormatted.json', 'utf8')));
     }).catch(function(err){
@@ -123,10 +132,10 @@ db.createDatabased = function(){
 db.updateSets = function(json) {
   for (var set in json) {
     json[set].cards.forEach(function(card) {
-      database.one('SELECT EXISTS (SELECT 1 FROM magic_cards WHERE name = $1 AND set = $2)', [card.name, card.set])
+      database.one('SELECT EXISTS (SELECT 1 FROM magicinventory.magic_cards WHERE name = $1 AND set = $2)', [card.name, card.set])
         .then(function(data) {
           if (!data.exists) {
-            database.none('INSERT INTO magic_cards (multiverseid, name, set, variations, setcode, collectorsnumber) VALUES ($1, $2, $3, $4, $5, $6)',
+            database.none('INSERT INTO magicinventory.magic_cards (multiverseid, name, set, variations, setcode, collectorsnumber) VALUES ($1, $2, $3, $4, $5, $6)',
                          [card.multiverseid, card.name, card.set,card.variations, card.setCode, card.number])
               .then(function() {})
               .catch(function(err) {

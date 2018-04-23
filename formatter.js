@@ -26,7 +26,7 @@ for(var set in sets){
     delete card.colorIdentity;
     delete card.cmc;
     delete card.colors;
-
+    delete card.multiverseid;
     delete card.id;
     //delete card.number;
     delete card.mciNumber;
