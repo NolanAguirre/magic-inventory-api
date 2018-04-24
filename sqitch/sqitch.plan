@@ -2,8 +2,9 @@
 %project=magic-inventory
 %uri=https://github.com/NolanAguirre/magic-inventory-api/
 
-appschema 2018-04-23T18:37:08Z Nolan Aguirre <nolanaguirre08@gmail.com> # add app schema for magic-inventory items
+appschema 2018-04-23T18:37:08Z Nolan Aguirre <nolanaguirre08@gmail.com> # Add app schema for magic-inventory items
 users [appschema] 2018-04-23T18:38:43Z Nolan Aguirre <nolanaguirre08@gmail.com> # Add table of users
 cards [appschema] 2018-04-23T18:54:51Z Nolan Aguirre <nolanaguirre08@gmail.com> # Add table for cards
 types [appschema] 2018-04-23T20:33:33Z Nolan Aguirre <nolanaguirre08@gmail.com> # Add type migration
 stores [appschema] 2018-04-23T22:09:54Z Nolan Aguirre <nolanaguirre08@gmail.com> # Add stores table
+orders [appschema types] 2018-04-23T22:11:07Z Nolan Aguirre <nolanaguirre08@gmail.com> # Add orders table
