@@ -4,7 +4,7 @@
 
 BEGIN;
 
-CREATE TYPE magic_inventory.card_types AS ENUM(
+CREATE TYPE magic_inventory.card_type AS ENUM(
     'artifact',
     'creature',
     'enchantment',

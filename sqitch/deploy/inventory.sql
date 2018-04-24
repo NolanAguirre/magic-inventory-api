@@ -4,6 +4,11 @@
 
 BEGIN;
 
--- XXX Add DDLs here.
+CREATE TABLE magic_inventory.inventory(
+    card magic_inventory.card,
+    quantity integer,
+    store_id text,
+    availability magic_inventory.card_status
+);
 
 COMMIT;

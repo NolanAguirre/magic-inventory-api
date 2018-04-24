@@ -2,9 +2,9 @@
 
 BEGIN;
 
-DROP TYPE magic_inventory.card_types;
+DROP TYPE magic_inventory.card_type;
 
-DROP TYPE magic_inventory.card_condition;
+DROP TYPE magic_inventory.card_condition CASCADE;
 
 DROP TYPE magic_inventory.card;
 
