@@ -3,7 +3,7 @@
 
 BEGIN;
 
-CREATE TYPE card_types AS ENUM{
+CREATE TYPE magic_inventory.card_types AS ENUM(
     'artifact',
     'creature',
     'enchantment',
@@ -11,18 +11,18 @@ CREATE TYPE card_types AS ENUM{
     'land',
     'planeswalker',
     'sorcery'
-}
+);
 
-CREATE TYPE card_condition AS ENUM{
+CREATE TYPE magic_inventory.card_condition AS ENUM(
     'mint',
     'near mint',
     'lightly played',
     'moderately played',
     'heavely played',
     'damaged'
-}
+);
 
-CREATE TYPE card AS {
+CREATE TYPE magic_inventory.card AS (
     name citext,
     tcg_id integer,
     image text,
@@ -31,12 +31,12 @@ CREATE TYPE card AS {
     collectors_number integer,
     condition card_condition,
     variations integer[]
-}
+);
 
-CREATE TYPE user AS{
+CREATE TYPE magic_inventory.user AS(
     name citext,
     id text,
     email citext
-}
+);
 
 COMMIT;

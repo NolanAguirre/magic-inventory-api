@@ -2,12 +2,12 @@
 
 BEGIN;
 
-DROP TYPE card_types;
+DROP TYPE magic_inventory.card_types;
 
-DROP TYPE card_condition;
+DROP TYPE magic_inventory.card_condition;
 
-DROP TYPE card;
+DROP TYPE magic_inventory.card;
 
-DROP TYPE user;
+DROP TYPE magic_inventory.user;
 
 COMMIT;

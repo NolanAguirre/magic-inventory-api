@@ -1,9 +1,11 @@
 -- Deploy magic-inventory:cards to pg
 -- requires: appschema
--- requires: card-type
+-- requires: card_type
 
 BEGIN;
 
--- XXX Add DDLs here.
+CREATE TABLE magic_inventory.cards{
+    card card
+}
 
 COMMIT;
