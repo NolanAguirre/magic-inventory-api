@@ -4,8 +4,8 @@
 
 BEGIN;
 
-CREATE TABLE magic_inventory.cards{
-    card card
-}
+CREATE TABLE magic_inventory.cards(
+    card magic_inventory.card
+);
 
 COMMIT;

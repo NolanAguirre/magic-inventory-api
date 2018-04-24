@@ -1,5 +1,6 @@
 -- Deploy magic-inventory:types to pg
 -- requires: appschema
+-- requires: extensions
 
 BEGIN;
 
@@ -29,7 +30,7 @@ CREATE TYPE magic_inventory.card AS (
     set_name citext,
     set_code citext,
     collectors_number integer,
-    condition card_condition,
+    condition magic_inventory.card_condition,
     variations integer[]
 );
 
