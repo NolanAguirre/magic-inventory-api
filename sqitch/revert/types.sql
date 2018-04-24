@@ -8,4 +8,6 @@ DROP TYPE card_condition;
 
 DROP TYPE card;
 
+DROP TYPE user;
+
 COMMIT;

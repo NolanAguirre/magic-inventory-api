@@ -21,6 +21,7 @@ CREATE TYPE card_condition AS ENUM{
     'heavely played',
     'damaged'
 }
+
 CREATE TYPE card AS {
     name citext,
     tcg_id integer,
@@ -30,6 +31,12 @@ CREATE TYPE card AS {
     collectors_number integer,
     condition card_condition,
     variations integer[]
+}
+
+CREATE TYPE user AS{
+    name citext,
+    id text,
+    email citext
 }
 
 COMMIT;
