@@ -2,6 +2,6 @@
 
 BEGIN;
 
-SELECT 1/COUNT(*) FROM pg_extension WHERE typname = 'citext';
+SELECT 1/COUNT(*) FROM pg_extension WHERE extname = 'citext';
 
 ROLLBACK;
