@@ -2,6 +2,6 @@
 
 BEGIN;
 
---DROP TABLE magic_inventory.inventory;
+DROP TABLE magic_inventory.inventory;
 
 COMMIT;
