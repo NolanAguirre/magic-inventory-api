@@ -2,6 +2,6 @@
 
 BEGIN;
 
-DROP SCHEMA magic_inventory;
+DROP SCHEMA magic_inventory CASCADE;
 
 COMMIT;
