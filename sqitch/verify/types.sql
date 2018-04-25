@@ -10,4 +10,6 @@ SELECT 1/COUNT(*) FROM pg_type WHERE typname = 'card';
 
 SELECT 1/COUNT(*) FROM pg_type WHERE typname = 'user';
 
+SELECT 1/COUNT(*) FROM pg_type WHERE typname = 'card_status';
+
 ROLLBACK;

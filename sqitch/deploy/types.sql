@@ -23,6 +23,14 @@ CREATE TYPE magic_inventory.card_condition AS ENUM(
     'damaged'
 );
 
+CREATE TYPE magic_inventory.card_status AS ENUM(
+    'sold',
+    'ordered',
+    'hold',
+    'available',
+    'preorder'
+);
+
 CREATE TYPE magic_inventory.card AS (
     name citext,
     tcg_id integer,

@@ -2,12 +2,14 @@
 
 BEGIN;
 
-DROP TYPE magic_inventory.card_type;
+DROP TYPE magic_inventory.card_type CASCADE;
 
 DROP TYPE magic_inventory.card_condition CASCADE;
 
-DROP TYPE magic_inventory.card;
+DROP TYPE magic_inventory.card CASCADE;
 
-DROP TYPE magic_inventory.user;
+DROP TYPE magic_inventory.user CASCADE;
+
+DROP TYPE magic_inventory.card_status CASCADE;
 
 COMMIT;
