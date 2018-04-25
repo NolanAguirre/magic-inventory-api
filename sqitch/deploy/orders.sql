@@ -4,6 +4,11 @@
 
 BEGIN;
 
--- XXX Add DDLs here.
+CREATE TABLE magic_inventory.orders(
+    cards magic_inventory.card[],
+    store_id text,
+    user_id text,
+    created_at timestamp default now()
+)
 
 COMMIT;
