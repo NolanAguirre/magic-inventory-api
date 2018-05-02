@@ -9,6 +9,6 @@ CREATE TABLE magic_inventory.orders(
     store_id text,
     user_id text,
     created_at timestamp default now()
-)
+);
 
 COMMIT;
