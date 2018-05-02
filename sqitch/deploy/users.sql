@@ -3,6 +3,8 @@
 
 BEGIN;
 
--- XXX Add DDLs here.
+CREATE TABLE magic_inventory.users(
+  user magic_inventory.user
+)
 
 COMMIT;
