@@ -26,7 +26,7 @@ CREATE FUNCTION magic_inventory.add_user(CITEXT, TEXT, CITEXT) RETURNS SETOF BOO
 
 $$ LANGUAGE PLPGSQL;
 
-CREATE FUNCTION magic_inventory.remoe_user(TEXT) RETURNS void AS $$
+CREATE FUNCTION magic_inventory.remove_user(TEXT) RETURNS void AS $$
   DELETE FROM magic_inventory.users WHERE (app_user).user_id = $1;
 $$ LANGUAGE SQL;
 
