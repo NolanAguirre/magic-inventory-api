@@ -5,9 +5,9 @@
 appschema 2018-04-23T18:37:08Z Nolan Aguirre <nolanaguirre08@gmail.com> # Add app schema for magic_inventory items
 extensions [appschema] 2018-04-24T11:42:02Z Nolan Aguirre <nolanaguirre08@gmail.com> # Add extensions
 types [appschema extensions] 2018-04-23T20:33:33Z Nolan Aguirre <nolanaguirre08@gmail.com> # Add type migration
+users [types appschema] 2018-04-23T18:38:43Z Nolan Aguirre <nolanaguirre08@gmail.com> # Add table of users
 stores [appschema] 2018-04-23T22:09:54Z Nolan Aguirre <nolanaguirre08@gmail.com> # Add stores table
 cards [types appschema] 2018-04-23T18:54:51Z Nolan Aguirre <nolanaguirre08@gmail.com> # Add table for cards
-users [types appschema] 2018-04-23T18:38:43Z Nolan Aguirre <nolanaguirre08@gmail.com> # Add table of users
 orders [types appschema] 2018-04-23T22:11:07Z Nolan Aguirre <nolanaguirre08@gmail.com> # Add orders table
 inventory [types appschema] 2018-04-24T11:18:41Z Nolan Aguirre <nolanaguirre08@gmail.com> # Add inventory table
 user_functions [users appschema types extensions] 2018-05-02T04:11:24Z Nolan,,, <nolan@nolan-Blade-Stealth> # add functions relating to the users table
