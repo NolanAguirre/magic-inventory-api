@@ -2,6 +2,8 @@
 
 BEGIN;
 
--- XXX Add DDLs here.
+DROP FUNCTION magic_inventory.add_user(citext, text, citext);
+
+DROP FUNCTION magic_inventory.remove_user(magic_inventory.user);
 
 COMMIT;
