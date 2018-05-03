@@ -4,7 +4,7 @@
 BEGIN;
 
 CREATE TABLE magic_inventory.users(
-  user magic_inventory.user
-)
+  app_user magic_inventory.user
+);
 
 COMMIT;
