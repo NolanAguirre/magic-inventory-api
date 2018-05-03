@@ -1,5 +1,6 @@
 -- Deploy magic-inventory:users to pg
 -- requires: appschema
+-- requires: types
 
 BEGIN;
 
