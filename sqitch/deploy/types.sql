@@ -44,7 +44,7 @@ CREATE TYPE magic_inventory.card AS (
 
 CREATE TYPE magic_inventory.user AS(
     name citext,
-    id text,
+    user_id text,
     email citext
 );
 
