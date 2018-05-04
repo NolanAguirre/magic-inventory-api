@@ -12,3 +12,4 @@ orders [types appschema] 2018-04-23T22:11:07Z Nolan Aguirre <nolanaguirre08@gmai
 inventory [types appschema] 2018-04-24T11:18:41Z Nolan Aguirre <nolanaguirre08@gmail.com> # Add inventory table
 user_functions [users appschema types extensions] 2018-05-02T04:11:24Z Nolan,,, <nolan@nolan-Blade-Stealth> # add functions relating to the users table
 roles 2018-05-04T19:05:30Z Nolan,,, <nolan@nolan-Blade-Stealth> # Add roles for the database
+privileges [appschema roles] 2018-05-04T19:25:32Z Nolan,,, <nolan@nolan-Blade-Stealth> # Set up privileges for the roles
