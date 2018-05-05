@@ -31,6 +31,12 @@ CREATE TYPE magic_inventory.card_status AS ENUM(
     'preorder'
 );
 
+CREATE TYPE magic_inventory.role as ENUM(
+  'user',
+  'employee',
+  'store_owner'
+);
+
 CREATE TYPE magic_inventory.magic_card AS (
     name citext,
     tcg_id integer,
@@ -45,7 +51,8 @@ CREATE TYPE magic_inventory.magic_card AS (
 CREATE TYPE magic_inventory.unique_name_user AS(
     name citext,
     user_id text,
-    email citext
+    email citext,
+    role magic_inventory.role
 );
 
 COMMIT;
