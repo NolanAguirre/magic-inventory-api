@@ -13,3 +13,5 @@ inventory [types appschema] 2018-04-24T11:18:41Z Nolan Aguirre <nolanaguirre08@g
 user_functions [users appschema types extensions] 2018-05-02T04:11:24Z Nolan,,, <nolan@nolan-Blade-Stealth> # add functions relating to the users table
 roles 2018-05-04T19:05:30Z Nolan,,, <nolan@nolan-Blade-Stealth> # Add roles for the database
 privileges [appschema roles] 2018-05-04T19:25:32Z Nolan,,, <nolan@nolan-Blade-Stealth> # Set up privileges for the roles
+inventory_functions [inventory] 2018-05-07T04:41:53Z Nolan,,, <nolan@nolan-Blade-Stealth> # Add inventory functions migration
+card_functions [types] 2018-05-07T05:01:34Z Nolan,,, <nolan@nolan-Blade-Stealth> # Create card functions migration
