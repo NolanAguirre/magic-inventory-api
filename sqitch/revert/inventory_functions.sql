@@ -2,6 +2,8 @@
 
 BEGIN;
 
--- XXX Add DDLs here.
+DROP FUNCTION magic_inventory.add_inventory(json[], TEXT);
+
+DROP FUNCTION magic_inventory.remove_inventory(json[], TEXT);
 
 COMMIT;

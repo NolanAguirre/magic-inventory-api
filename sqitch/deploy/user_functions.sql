@@ -6,6 +6,7 @@
 
 BEGIN;
 
+--TODO remove return query, change to remove
 CREATE FUNCTION magic_inventory.add_user(CITEXT, TEXT, CITEXT) RETURNS SETOF BOOLEAN AS $$
 
   BEGIN
