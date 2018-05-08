@@ -2,6 +2,6 @@
 
 BEGIN;
 
--- XXX Add DDLs here.
+DROP FUNCTION magic_inventory.create_card(json);
 
 COMMIT;
