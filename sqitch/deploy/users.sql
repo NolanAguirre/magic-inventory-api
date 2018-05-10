@@ -5,7 +5,7 @@
 BEGIN;
 
 CREATE TABLE magic_inventory.users(
-  app_user magic_inventory.unique_name_user
+  app_user magic_inventory.user_type
 );
 
 COMMIT;

@@ -5,10 +5,10 @@
 BEGIN;
 
 CREATE TABLE magic_inventory.inventory(
-    card magic_inventory.magic_card,
+    card magic_inventory.magic_card_type,
     quantity integer,
     store_id text,
-    availability magic_inventory.card_status
+    availability magic_inventory.card_status_type
 );
 
 COMMIT;

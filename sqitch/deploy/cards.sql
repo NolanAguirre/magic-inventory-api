@@ -5,7 +5,7 @@
 BEGIN;
 
 CREATE TABLE magic_inventory.cards(
-    card magic_inventory.magic_card
+    card magic_inventory.magic_card_type
 );
 
 COMMIT;

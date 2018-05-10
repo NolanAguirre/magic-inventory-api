@@ -2,7 +2,7 @@
 -- requires: users
 -- requires: appschema
 -- requires: types
---requires: extensions
+-- requires: extensions
 
 BEGIN;
 
@@ -11,13 +11,13 @@ CREATE FUNCTION magic_inventory.add_user(CITEXT, TEXT, CITEXT) RETURNS SETOF BOO
 
   BEGIN
 
-    IF (SELECT EXISTS(SELECT 1 FROM magic_inventory.users WHERE app_user.user_id = $2)) THEN
+    IF (SELECT EXISTS(SELECT 1 FROM magic_inventory.users WHERE (app_user).user_id = $2)) THEN
       RETURN QUERY SELECT false;
     END IF;
 
-    INSERT INTO magic_inventory.user VALUES (ROW($1, $2, $3)::magic_inventory.user);
+    INSERT INTO magic_inventory.users VALUES (ROW($1, $2, $3)::magic_inventory.user_type);
 
-    IF (SELECT EXISTS(SELECT 1 FROM magic_inventory.users WHERE app_user.user_id = $2)) THEN -- this maybe uneeded
+    IF (SELECT EXISTS(SELECT 1 FROM magic_inventory.users WHERE (app_user).user_id = $2)) THEN -- this maybe uneeded
       RETURN QUERY SELECT false;
     END IF;
 
