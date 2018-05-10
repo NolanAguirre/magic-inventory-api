@@ -4,7 +4,7 @@
 
 BEGIN;
 
-CREATE TYPE magic_inventory.card_type AS ENUM(
+CREATE TYPE magic_inventory.card_type_type AS ENUM(
     'artifact',
     'creature',
     'enchantment',
@@ -14,7 +14,7 @@ CREATE TYPE magic_inventory.card_type AS ENUM(
     'sorcery'
 );
 
-CREATE TYPE magic_inventory.magic_card_condition AS ENUM(
+CREATE TYPE magic_inventory.card_condition_type AS ENUM(
     'mint',
     'near mint',
     'lightly played',
@@ -23,26 +23,26 @@ CREATE TYPE magic_inventory.magic_card_condition AS ENUM(
     'damaged'
 );
 
-CREATE TYPE magic_inventory.card_status AS ENUM(
+CREATE TYPE magic_inventory.card_status_type AS ENUM(
     'sold',
     'ordered',
     'hold',
     'available',
     'preorder'
 );
-CREATE TYPE magic_inventory.order_status AS ENUM(
+CREATE TYPE magic_inventory.order_status_type AS ENUM(
   'sent',
   'recived',
   'ready',
   'unfulfillable'
 );
-CREATE TYPE magic_inventory.role as ENUM( --may not need, more to keep track of the roles that to actually be used
+CREATE TYPE magic_inventory.role_type as ENUM( --may not need, more to keep track of the roles that to actually be used
   'user',
   'employee',
   'store_owner'
 );
 
-CREATE TYPE magic_inventory.magic_card AS (
+CREATE TYPE magic_inventory.magic_card_type AS (
     name citext,
     tcg_id integer,
     image text,
@@ -50,15 +50,15 @@ CREATE TYPE magic_inventory.magic_card AS (
     set_code citext,
     set_name citext,
     collectors_number integer,
-    condition magic_inventory.magic_card_condition,
+    condition magic_inventory.card_condition_type,
     variations integer[]
 );
 
-CREATE TYPE magic_inventory.unique_name_user AS(
+CREATE TYPE magic_inventory.user_type AS(
     name citext,
     user_id text,
-    email citext,
-    role magic_inventory.role --may not need
+    email citext--,
+    --role magic_inventory.role --may not need
 );
 
 COMMIT;
