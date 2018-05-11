@@ -24,9 +24,10 @@ CREATE TYPE magic_inventory.card_condition_type AS ENUM(
 );
 
 CREATE TYPE magic_inventory.card_status_type AS ENUM(
-    'sold',
     'ordered',
-    'hold',
+    'sold',
+    'requested',
+    'reference card',
     'available',
     'preorder'
 );
@@ -34,6 +35,8 @@ CREATE TYPE magic_inventory.order_status_type AS ENUM(
   'sent',
   'recived',
   'ready',
+  'complete',
+  'cancled',
   'unfulfillable'
 );
 CREATE TYPE magic_inventory.role_type as ENUM( --may not need, more to keep track of the roles that to actually be used
@@ -51,6 +54,7 @@ CREATE TYPE magic_inventory.magic_card_type AS (
     set_name citext,
     collectors_number integer,
     condition magic_inventory.card_condition_type,
+    card_status magic_inventory.card_status_type,
     variations integer[]
 );
 
