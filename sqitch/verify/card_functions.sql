@@ -2,6 +2,6 @@
 
 BEGIN;
 
--- XXX Add verifications here.
+SELECT 1/ COUNT(*) FROM pg_proc WHERE proname = 'create_card' and proschema = 'magic_inventory';
 
 ROLLBACK;
