@@ -5,7 +5,7 @@
 BEGIN;
 
 CREATE TABLE magic_inventory.orders(
-    cards magic_inventory.magic_card_type[],
+    cards magic_inventory.inventory_card_type[],
     store_id text,
     user_id text,
     order_status magic_inventory.order_status_type,

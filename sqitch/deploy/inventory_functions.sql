@@ -18,6 +18,26 @@ CREATE FUNCTION magic_inventory.add_inventory(json[], TEXT) RETURNS VOID AS $$ -
   END;
 $$ LANGUAGE PLPGSQL;
 
+CREATE FUNCTION magic_inventory.add_inventory(magic_inventory.inventory_card_type[], TEXT) RETURN VOID AS $$
+  DECLARE
+    temp_card magic_inventory.inventory_card_type;
+  BEGIN
+    FOREACH temp_card IN ARRAY $1
+    LOOP
+      magic_inventory.add_inventory(temp_card, $2);
+    END LOOP;
+  END;
+$$ LANGUAGE PLPGSQL;
+
+CREATE FUNCTION magic_inventory.add_inventory(magic_inventory.inventory_card_type, TEXT) RETURN VOID AS $$
+  BEGIN
+    IF(SELECT EXISTS(SELECT 1 FROM magic_inventory.inventory WHERE store_id = $2 AND (card).name = $1.name AND (card).set_name = $1.name AND (card).condition = $1.condition)) THEN
+      UPDATE magic_inventory.inventory SET card.quantity = (card).quantity + $1.quantity WHERE store_id = $2 AND (card).name = $1.name AND (card).set_name = $1.name AND (card).condition = $1.condition;
+    ELSE
+      INSERT INTO magic_inventory.inventory (card, store_id, availability) VALUES ($1, $2, 'available');
+    END IF;
+  END;
+$$ LANGUAGE PLPGSQL;
 
 CREATE FUNCTION magic_inventory.remove_inventory(json[], TEXT) RETURNS BOOLEAN AS $$
   DECLARE
