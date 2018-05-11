@@ -54,7 +54,6 @@ CREATE TYPE magic_inventory.magic_card_type AS (
     set_name citext,
     collectors_number integer,
     condition magic_inventory.card_condition_type,
-    card_status magic_inventory.card_status_type,
     variations integer[]
 );
 
