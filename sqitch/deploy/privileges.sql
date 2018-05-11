@@ -27,6 +27,9 @@ GRANT EXECUTE ON FUNCTION magic_inventory.add_inventory(json[], TEXT) TO magic_i
 GRANT EXECUTE ON FUNCTION magic_inventory.remove_inventory(json[], TEXT) TO magic_inventory_employee, magic_inventory_store_owner;
 
 
--- -- this needs some thinkin done before i do this
-
+-- row level needed:
+-- inventory, stores can only add and remove from their stores
+-- orders, users, and stores can only add to their orders, via checking if they belong to the store, or the person is the person who placed the order
+-- stores, employees can only edit stores to which they are admins in
+-- users can only delete their own profile
 COMMIT;

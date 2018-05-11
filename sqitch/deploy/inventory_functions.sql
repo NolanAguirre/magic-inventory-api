@@ -5,7 +5,7 @@ BEGIN;
 
 CREATE FUNCTION magic_inventory.add_inventory(json[], TEXT) RETURNS VOID AS $$ -- json of store cards, and
   DECLARE
-  temp_card json;
+    temp_card json;
   BEGIN
     FOR temp_card IN SELECT * FROM json_array_elements($1)
     LOOP
