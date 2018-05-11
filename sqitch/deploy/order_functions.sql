@@ -26,9 +26,9 @@ $$ LANGUAGE PLPGSQL;
 
 CREATE FUNCTION magic_inventory.update_order(INTEGER, magic_inventory.order_status_type) RETURNS VOID AS $$
   BEGIN
-    UPDATE magic_inventory.orders SET order_status = 'sold' WHERE order_id = $1;
+    UPDATE magic_inventory.orders SET order_status = $2 WHERE order_id = $1;
     IF ($2 = 'cancled') THEN
-      magic_inventory.add_inventory((SELECT cards FROM magic_inventory.orders WHERE order_id = $1), (SELECT store_id  FROM magic_inventory.orders WHERE order_id = $1));
+      SELECT magic_inventory.add_inventory((SELECT cards FROM magic_inventory.orders WHERE order_id = $1), (SELECT store_id  FROM magic_inventory.orders WHERE order_id = $1));
     END IF;
   END;
 $$ LANGUAGE PLPGSQL;
