@@ -57,8 +57,17 @@ CREATE TYPE magic_inventory.magic_card_type AS (
     variations integer[]
 );
 CREATE TYPE magic_inventory.inventory_card_type AS (
+  name citext,
+  tcg_id integer,
+  image text,
+  card_set citext,
+  set_code citext,
+  set_name citext,
+  collectors_number integer,
+  condition magic_inventory.card_condition_type,
+  variations integer[],
   quantity INTEGER
-) INHERITS (magic_inventory.magic_card_type);
+);
 
 CREATE TYPE magic_inventory.user_type AS(
     name citext,
