@@ -5,8 +5,7 @@
 BEGIN;
 
 CREATE TABLE magic_inventory.inventory(
-    card magic_inventory.magic_card_type,
-    quantity integer,
+    card magic_inventory.inventory_card_type[],
     store_id text,
     availability magic_inventory.card_status_type
 );

@@ -20,4 +20,8 @@ CREATE FUNCTION magic_inventory.create_magic_card(json) RETURNS magic_inventory.
   END
 $$ LANGUAGE PLPGSQL;
 
+CREATE FUNCTION magic_inventory.to_inventory_card(magic_inventory.magic_card_type, INTEGER) RETUSN magic_inventory.inventory_card_type AS $$
+  RETURN ROW($1.name, $1.tcg_id, $1.image,$1.card_set, $1.set_code, $1.set_name, $1.collectors_number, $1.condition, $1.variations, $2)::magic_inventory.inventory_card_type;
+$$ LANGUAGE PLPGSQL;
+
 COMMIT;

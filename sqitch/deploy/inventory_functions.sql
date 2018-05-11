@@ -5,27 +5,46 @@ BEGIN;
 
 CREATE FUNCTION magic_inventory.add_inventory(json[], TEXT) RETURNS VOID AS $$ -- json of store cards, and
   DECLARE
-    temp_card json;
+    json_card json;
   BEGIN
-    FOR temp_card IN SELECT * FROM json_array_elements($1)
+    FOR json_card IN SELECT * FROM json_array_elements($1)
     LOOP
-      IF(SELECT EXISTS(SELECT 1 FROM magic_inventory.inventory WHERE store_id = $2 AND (card).name = temp_card.name AND (card).set_name = temp_card.name AND (card).condition = temp_card.condition)) THEN
-        UPDATE magic_inventory.inventory SET quantity = quantity + temp_card.quantity WHERE store_id = $2 AND (card).name = temp_card.name AND (card).set_name = temp_card.name AND (card).condition = temp_card.condition;
+      IF(SELECT EXISTS(SELECT 1 FROM magic_inventory.inventory WHERE store_id = $2 AND (card).name = json_card.name AND (card).set_name = json_card.name AND (card).condition = json_card.condition)) THEN
+        UPDATE magic_inventory.inventory SET (card).quantity = (card).quantity + json_card.quantity WHERE store_id = $2 AND (card).name = json_card.name AND (card).set_name = json_card.name AND (card).condition = json_card.condition;
       ELSE
-        INSERT INTO magic_inventory.inventory VALUES (magic_inventory.create_magic_card(temp_card), $2);
+        INSERT INTO magic_inventory.inventory VALUES (magic_inventory.to_inventory_card(magic_inventory.create_magic_card(json_card),json_card.quantity), $2, 'available');
       END IF;
     END LOOP;
   END
 $$ LANGUAGE PLPGSQL;
 
-CREATE FUNCTION magic_inventory.remove_inventory(json[], TEXT) RETURNS VOID AS $$
+
+CREATE FUNCTION magic_inventory.remove_inventory(json[], TEXT) RETURNS BOOLEAN AS $$
   DECLARE
   temp_card json;
+  contains_all_cards BOOLEAN;
   BEGIN
+    contains_all_cards := true;
     FOR temp_card in SELECT * FROM json_array_elements($1)
     LOOP
-
+      IF(SELECT EXISTS(SELECT 1 FROM magic_inventory.inventory WHERE store_id = $2 AND (card).name = temp_card.name AND (card).set_name = temp_card.name AND (card).condition = temp_card.condition))) THEN
+        --do nothing if its there
+      ELSE
+        contains_all_cards := false;
+      END IF;
     END LOOP;
+    IF(contains_all_cards) THEN
+    FOR json_card IN SELECT * FROM json_array_elements($1)
+      LOOP
+        IF(SELECT EXISTS(SELECT 1 FROM magic_inventory.inventory WHERE store_id = $2 AND (card).name = json_card.name AND (card).set_name = json_card.name AND (card).condition = json_card.condition AND (card).quantity > json_card.quantity) THEN
+          UPDATE magic_inventory.inventory SET (card).quantity = (card).quantity - json_card.quantity WHERE store_id = $2 AND (card).name = json_card.name AND (card).set_name = json_card.name AND (card).condition = json_card.condition;
+        ELSE
+          DELETE FROM magic_inventory.inventory WHERE WHERE store_id = $2 AND (card).name = json_card.name AND (card).set_name = json_card.name AND (card).condition = json_card.condition;
+        END IF;
+      END LOOP;
+      RETUR true;
+    ELSE
+      RETURN false;
   END
 $$ LANGUAGE PLPGSQL;
 
