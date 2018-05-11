@@ -1,6 +1,7 @@
 -- Deploy magic-inventory:privileges to pg
 -- requires: appschema
 -- requires: roles
+-- requires inventory_functions
 
 BEGIN;
 
