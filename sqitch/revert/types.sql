@@ -8,6 +8,8 @@ DROP TYPE magic_inventory.card_condition_type CASCADE;
 
 DROP TYPE magic_inventory.magic_card_type CASCADE;
 
+DROP TYPE magic_inventory.inventory_card_type CASCADE;
+
 DROP TYPE magic_inventory.role_type CASCADE;
 
 DROP TYPE magic_inventory.order_status_type CASCADE;
