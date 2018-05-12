@@ -3,7 +3,7 @@
 
 BEGIN;
 
-CREATE FUNCTION magic_inventory.add_inventory(json[], TEXT) RETURNS VOID AS $$ -- json of store cards, and
+CREATE FUNCTION magic_inventory.add_inventory(arg_cards_data json[], arg_store_id TEXT) RETURNS VOID AS $$ -- json of store cards, and
   DECLARE
     json_card json;
   BEGIN
@@ -18,7 +18,7 @@ CREATE FUNCTION magic_inventory.add_inventory(json[], TEXT) RETURNS VOID AS $$ -
   END;
 $$ LANGUAGE PLPGSQL;
 
-CREATE FUNCTION magic_inventory.add_inventory(magic_inventory.inventory_card_type[], TEXT) RETURNS VOID AS $$
+CREATE FUNCTION magic_inventory.add_inventory(arg_inventory_cards magic_inventory.inventory_card_type[], arg_store_id TEXT) RETURNS VOID AS $$
   DECLARE
     temp_card magic_inventory.inventory_card_type;
   BEGIN
@@ -29,7 +29,7 @@ CREATE FUNCTION magic_inventory.add_inventory(magic_inventory.inventory_card_typ
   END;
 $$ LANGUAGE PLPGSQL;
 
-CREATE FUNCTION magic_inventory.add_inventory(magic_inventory.inventory_card_type, TEXT) RETURNS VOID AS $$
+CREATE FUNCTION magic_inventory.add_inventory(arg_inventory_card magic_inventory.inventory_card_type,arg_store_id TEXT) RETURNS VOID AS $$
   BEGIN
     IF(SELECT EXISTS(SELECT 1 FROM magic_inventory.inventory WHERE store_id = $2 AND (card).name = $1.name AND (card).set_name = $1.name AND (card).condition = $1.condition)) THEN
       UPDATE magic_inventory.inventory SET card.quantity = (card).quantity + $1.quantity WHERE store_id = $2 AND (card).name = $1.name AND (card).set_name = $1.name AND (card).condition = $1.condition;
@@ -39,7 +39,7 @@ CREATE FUNCTION magic_inventory.add_inventory(magic_inventory.inventory_card_typ
   END;
 $$ LANGUAGE PLPGSQL;
 
-CREATE FUNCTION magic_inventory.remove_inventory(json[], TEXT) RETURNS BOOLEAN AS $$
+CREATE FUNCTION magic_inventory.remove_inventory(arg_cards_data json[], arg_store_id TEXT) RETURNS BOOLEAN AS $$
   DECLARE
   json_card json;
   contains_all_cards BOOLEAN;
@@ -69,5 +69,9 @@ CREATE FUNCTION magic_inventory.remove_inventory(json[], TEXT) RETURNS BOOLEAN A
   END;
 $$ LANGUAGE PLPGSQL;
 
+COMMENT ON FUNCTION magic_inventory.add_inventory(json[], TEXT) is 'Accepts json array of cards and adds them to the stores inventory';
+COMMENT ON FUNCTION magic_inventory.add_inventory(magic_inventory.inventory_card_type[], TEXT) is 'Internal use only.';
+COMMENT ON FUNCTION magic_inventory.add_inventory(magic_inventory.inventory_card_type, TEXT) is 'Internal use only.';
+COMMENT ON FUNCTION magic_inventory.remove_inventory(json[], TEXT) is 'Accepts json array of cards and removes them to the stores inventory';
 
 COMMIT;

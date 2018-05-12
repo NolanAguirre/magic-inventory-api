@@ -9,5 +9,6 @@ CREATE TABLE magic_inventory.inventory(
     store_id text,
     availability magic_inventory.card_status_type
 );
+COMMENT ON TABLE magic_inventory.inventory is 'All the magic cards in stores inventory.';
 
 COMMIT;

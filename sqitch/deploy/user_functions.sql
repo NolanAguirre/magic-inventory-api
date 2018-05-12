@@ -7,7 +7,7 @@
 BEGIN;
 
 --TODO remove return query, change to remove
-CREATE FUNCTION magic_inventory.add_user(CITEXT, TEXT, CITEXT) RETURNS SETOF BOOLEAN AS $$
+CREATE FUNCTION magic_inventory.add_user(arg_user_name CITEXT,arg_user_id TEXT, arg_user_email CITEXT) RETURNS SETOF BOOLEAN AS $$
 
   BEGIN
 
@@ -27,8 +27,12 @@ CREATE FUNCTION magic_inventory.add_user(CITEXT, TEXT, CITEXT) RETURNS SETOF BOO
 
 $$ LANGUAGE PLPGSQL;
 
-CREATE FUNCTION magic_inventory.remove_user(TEXT) RETURNS void AS $$
+CREATE FUNCTION magic_inventory.remove_user(arg_user_id TEXT) RETURNS void AS $$
   DELETE FROM magic_inventory.users WHERE (app_user).user_id = $1;
 $$ LANGUAGE SQL;
+
+COMMENT ON FUNCTION magic_inventory.add_user(CITEXT, TEXT, CITEXT) is 'Adds a user to the use table, makes sure the user doesnt exists already';
+COMMENT ON FUNCTION magic_inventory.remove_user(TEXT) is 'Removes a user from the user table';
+
 
 COMMIT;

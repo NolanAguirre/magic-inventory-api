@@ -13,4 +13,6 @@ CREATE TABLE magic_inventory.orders(
     order_id SERIAL UNIQUE -- needs to change probably
 );
 
+COMMENT ON TABLE magic_inventory.orders is 'All the orders that have been placed to stores.';
+
 COMMIT;

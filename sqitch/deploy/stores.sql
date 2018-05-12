@@ -11,4 +11,6 @@ CREATE TABLE magic_inventory.stores(
   admins text[]
 );
 
+COMMENT ON TABLE magic_inventory.stores is 'Stores and their data, not inventory.';
+
 COMMIT;

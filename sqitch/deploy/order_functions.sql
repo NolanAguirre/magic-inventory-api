@@ -8,7 +8,7 @@ BEGIN;
 --orders need to accept the list, the to and the from
 --from that it needs to remove the cards from inventory, and create an order
 --only available cards show in inventory, cards in other statuses are kept in the order history.
-CREATE FUNCTION magic_inventory.place_order(json[], TEXT, TEXT) RETURNS VOID AS $$ -- cards, store id, user who ordered
+CREATE FUNCTION magic_inventory.place_order(agrs_card_data json[],args_store_id TEXT, args_use_id TEXT) RETURNS VOID AS $$ -- cards, store id, user who ordered
   DECLARE
     card_array magic_inventory.inventory_card_type[];
     temp_card magic_inventory.inventory_card_type;
@@ -24,7 +24,7 @@ CREATE FUNCTION magic_inventory.place_order(json[], TEXT, TEXT) RETURNS VOID AS 
   END;
 $$ LANGUAGE PLPGSQL;
 
-CREATE FUNCTION magic_inventory.update_order(INTEGER, magic_inventory.order_status_type) RETURNS VOID AS $$
+CREATE FUNCTION magic_inventory.update_order_status(args_order_id INTEGER, args_order_status magic_inventory.order_status_type) RETURNS VOID AS $$
   BEGIN
     UPDATE magic_inventory.orders SET order_status = $2 WHERE order_id = $1;
     IF ($2 = 'cancled') THEN
@@ -32,5 +32,9 @@ CREATE FUNCTION magic_inventory.update_order(INTEGER, magic_inventory.order_stat
     END IF;
   END;
 $$ LANGUAGE PLPGSQL;
+
+COMMENT ON FUNCTION magic_inventory.place_order(json[], TEXT, TEXT) is 'Accepts json array of cards and creates an order, and removes the cards from inventory';
+COMMENT ON FUNCTION magic_inventory.update_order_status(INTEGER, magic_inventory.order_status_type) is 'Handles the progression of an order, adds cards back to invntory if the order is cancled';
+
 
 COMMIT;

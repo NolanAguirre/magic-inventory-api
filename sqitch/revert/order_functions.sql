@@ -4,6 +4,6 @@ BEGIN;
 
 DROP FUNCTION magic_inventory.place_order(json[], TEXT, TEXT);
 
-DROP FUNCTION magic_inventory.update_order(INTEGER, magic_inventory.order_status_type);
+DROP FUNCTION magic_inventory.update_order_status(INTEGER, magic_inventory.order_status_type);
 
 COMMIT;
