@@ -7,7 +7,7 @@ const jwksRsa = require('jwks-rsa');
 const cors = require('cors');
 const db = require('./db');
 const fs = require('fs');
-db.createDatabased();
+db.updateSets(JSON.parse(fs.readFileSync('card_data/AllSetsFormatted.json', 'utf8')));
 if (!process.env.AUTH0_DOMAIN || !process.env.AUTH0_AUDIENCE) {
     throw 'Make sure you have AUTH0_DOMAIN, and AUTH0_AUDIENCE in your .env file'
 }
