@@ -52,7 +52,7 @@ CREATE TYPE magic_inventory.magic_card_type AS ( -- TODO add multiverseid, right
     set_name citext,
     collectors_number integer,
     condition magic_inventory.card_condition_type,
-    variations integer[]
+    variations citext[]
 );
 CREATE TYPE magic_inventory.inventory_card_type AS (  -- TODO add multiverseid, right now tcgplayer is multiverseid
   name citext,
@@ -61,7 +61,7 @@ CREATE TYPE magic_inventory.inventory_card_type AS (  -- TODO add multiverseid, 
   set_name citext,
   collectors_number integer,
   condition magic_inventory.card_condition_type,
-  variations integer[],
+  variations citext[],
   quantity INTEGER
 );
 
