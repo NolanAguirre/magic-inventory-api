@@ -36,15 +36,6 @@ app.get('/api/public', function(req, res) {
     });
 });
 
-app.post('/api/typeahead', function(req, res) {
-    db.typeahead(req.body.queryParams).then(
-        function(data){
-            if (data) {
-                res.json(data.slice(0, 10));
-            }
-        }
-    )
-});
 
 app.post('/api/search', checkJwt, function(req, res) {
     db.getCards(req.body.queryParams).then(function(data) {
@@ -76,13 +67,6 @@ app.post('/api/role', checkJwt, function(req, res) { // checks the role
             }
         })
 });
-app.post('/api/admin/inventory', checkJwt, function(req, res) {
-    db.addToInventory(req.body.queryParams).then(function(data) {
-        res.status(200);
-    })
-});
-app.post('/api/admin/orders')
-app.post('/api/admin/settings')
 
 app.listen(3001);
 console.log('Listening on http://localhost:3001');
