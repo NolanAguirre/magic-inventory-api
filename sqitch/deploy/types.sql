@@ -48,7 +48,6 @@ CREATE TYPE magic_inventory.role_type as ENUM( --may not need, more to keep trac
 CREATE TYPE magic_inventory.magic_card_type AS (
     name citext,
     tcg_id integer,
-    image text,
     card_set citext,
     set_code citext,
     set_name citext,
@@ -59,7 +58,6 @@ CREATE TYPE magic_inventory.magic_card_type AS (
 CREATE TYPE magic_inventory.inventory_card_type AS (
   name citext,
   tcg_id integer,
-  image text,
   card_set citext,
   set_code citext,
   set_name citext,
