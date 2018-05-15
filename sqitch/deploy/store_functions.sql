@@ -3,15 +3,15 @@
 
 BEGIN;
 
-CREATE FUNCTION magic_inventory.create_store(arg_store_name citext) RETURNS NULL AS $$
+CREATE FUNCTION magic_inventory.create_store(arg_store_name citext) RETURNS VOID AS $$
 
 $$ LANGUAGE SQL;
 
-CREATE FUNCTION magic_inventory.update_store_settings(arg_settings json) RETURNS NULL AS $$
+CREATE FUNCTION magic_inventory.update_store_settings(arg_settings json) RETURNS VOID AS $$
 
 $$ LANGUAGE SQL;
 
-CREATE FUNCTION magic_inventory.delete_store(arg_store_id TEXT) RETURNS NULL as $$
+CREATE FUNCTION magic_inventory.delete_store(arg_store_id TEXT) RETURNS VOID as $$
 
 $$ LANGUAGE SQL;
 COMMIT;
