@@ -22,8 +22,26 @@ CREATE FUNCTION magic_inventory.to_inventory_card(arg_magic_card magic_inventory
   END;
 $$ LANGUAGE PLPGSQL;
 
+CREATE FUNCTION magic_inventory.typeahead(arg_card_name CITEXT) RETURNS SETOF magic_inventory.magic_card_type AS $$
+  BEGIN
+    RETURN QUERY SELECT 10 FROM magic_inventory.cards WHERE card.name = $1 + '%';
+  END;
+$$ LANGUAGE PLPGSQL;
+
+CREATE FUNCTION magic_inventory.query_card(arg_card_data json) RETURNS SETOF magic_inventory.magic_card_type AS $$
+  BEGIN
+    IF (SELECT $1->'card_name' is not null) THEN
+      RETURN QUERY SELECT * FROM magic_inventory.card WHERE card.name = $1.name;
+    ELSE
+      RETURN QUERY SELECT * FROM magic_inventory.card WHERE card.set_code = $1.set_code AND card.set_name = $1.set_name;
+      END IF;
+  END;
+$$ LANGUAGE PLPGSQL;
+
 COMMENT ON FUNCTION magic_inventory.create_magic_card(json) is 'Internal use only.';
 COMMENT ON FUNCTION magic_inventory.to_inventory_card(magic_inventory.magic_card_type, INTEGER) is 'Internal use only.';
+COMMENT ON FUNCTION magic_inventory.typeahead(CITEXT) is 'Typeahead query endpoint.';
+
 
 
 COMMIT;
