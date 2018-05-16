@@ -1,13 +1,16 @@
 -- Deploy magic-inventory:orders to pg
 -- requires: appschema
 -- requires: types
+-- requires: cards
+-- requires: stores
+-- requires: users
 
 BEGIN;
 
 CREATE TABLE magic_inventory.orders(
-  card_id REFERENCES magic_inventory.cards(id),
-  store_id REFERENCES magic_inventory.stores(id),
-  user_id REFERENCES magic_inventory.users(id),
+  card_id UUID REFERENCES magic_inventory.cards(id),
+  store_id UUID REFERENCES magic_inventory.stores(id),
+  user_id UUID REFERENCES magic_inventory.users(id),
   order_status magic_inventory.order_status_type,
   condition magic_inventory.card_condition_type,
   created_at timestamp default now(),

@@ -1,12 +1,14 @@
 -- Deploy magic-inventory:inventory to pg
 -- requires: appschema
 -- requires: types
+-- requires: cards
+-- requires: stores
 
 BEGIN;
 
 CREATE TABLE magic_inventory.inventory(
-  card_id REFERENCES magic_inventory.cards(id),
-  store_id REFERENCES magic_inventory.stores(id),
+  card_id UUID REFERENCES magic_inventory.cards(id),
+  store_id UUID REFERENCES magic_inventory.stores(id),
   condition magic_inventory.card_condition_type,
   CONSTRAINT inventory_item_key  PRIMARY KEY (card_id, store_id)
 );
