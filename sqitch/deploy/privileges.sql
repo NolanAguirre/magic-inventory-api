@@ -20,12 +20,12 @@ GRANT UPDATE ON TABLE magic_inventory.orders TO magic_inventory_employee, magic_
 GRANT SELECT (store_name, store_id) ON TABLE magic_inventory.stores TO magic_inventory_user, magic_inventory_anonymous, magic_inventory_employee, magic_inventory_store_owner;
 GRANT SELECT (client_settings), UPDATE (client_settings) ON TABLE magic_inventory.stores TO magic_inventory_employee, magic_inventory_store_owner;
 GRANT SELECT (admins) , UPDATE (admins) ON TABLE magic_inventory.stores TO magic_inventory_store_owner;
-
-GRANT EXECUTE ON FUNCTION magic_inventory.add_user(CITEXT, TEXT, CITEXT) TO magic_inventory_user, magic_inventory_anonymous, magic_inventory_employee, magic_inventory_store_owner;
-GRANT EXECUTE ON FUNCTION magic_inventory.remove_user(TEXT) TO magic_inventory_user, magic_inventory_employee, magic_inventory_store_owner;
-
-GRANT EXECUTE ON FUNCTION magic_inventory.add_inventory(json[], TEXT) TO magic_inventory_employee, magic_inventory_store_owner;
-GRANT EXECUTE ON FUNCTION magic_inventory.remove_inventory(json[], TEXT) TO magic_inventory_employee, magic_inventory_store_owner;
+-- 
+-- GRANT EXECUTE ON FUNCTION magic_inventory.add_user(CITEXT, TEXT, CITEXT) TO magic_inventory_user, magic_inventory_anonymous, magic_inventory_employee, magic_inventory_store_owner;
+-- GRANT EXECUTE ON FUNCTION magic_inventory.remove_user(TEXT) TO magic_inventory_user, magic_inventory_employee, magic_inventory_store_owner;
+--
+-- GRANT EXECUTE ON FUNCTION magic_inventory.add_inventory(json[], TEXT) TO magic_inventory_employee, magic_inventory_store_owner;
+-- GRANT EXECUTE ON FUNCTION magic_inventory.remove_inventory(json[], TEXT) TO magic_inventory_employee, magic_inventory_store_owner;
 
 
 -- row level needed:

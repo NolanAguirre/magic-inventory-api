@@ -45,31 +45,5 @@ CREATE TYPE magic_inventory.role_type as ENUM( --may not need, more to keep trac
   'store_owner'
 );
 
-CREATE TYPE magic_inventory.magic_card_type AS ( -- TODO add multiverseid, right now tcgplayer is multiverseid
-    name citext,
-    tcg_id integer,
-    set_code citext,
-    set_name citext,
-    collectors_number integer,
-    condition magic_inventory.card_condition_type,
-    variations citext[]
-);
-CREATE TYPE magic_inventory.inventory_card_type AS (  -- TODO add multiverseid, right now tcgplayer is multiverseid
-  name citext,
-  tcg_id integer,
-  set_code citext,
-  set_name citext,
-  collectors_number integer,
-  condition magic_inventory.card_condition_type,
-  variations citext[],
-  quantity INTEGER
-);
-
-CREATE TYPE magic_inventory.user_type AS(
-    name citext,
-    user_id text,
-    email citext--,
-    --role magic_inventory.role --may not need
-);
 
 COMMIT;
