@@ -4,4 +4,6 @@ BEGIN;
 
 DROP EXTENSION citext;
 
+DROP EXTENSION "uuid-ossp";
+
 COMMIT;
