@@ -33,11 +33,11 @@ db.typeahead = function(queryParams){
 db.updateSets = function(json) {
   for (var set in json) {
     json[set].cards.forEach(function(card) {
-      database.one('SELECT EXISTS (SELECT 1 FROM magic_inventory.cards WHERE (card).name = $1 AND (card).set_name = $2)', [card.name, card.set])
+      database.one('SELECT EXISTS (SELECT 1 FROM magic_inventory.cards WHERE name = $1 AND set_name = $2)', [card.name, card.set])
         .then(function(data) {
           if (!data.exists) {
-            database.none('INSERT INTO magic_inventory.cards (card) VALUES (ROW($1, $2, $3, $4, $5, $6,$7)::magic_inventory.magic_card_type)',
-                         [card.name, card.multiverseid, card.setCode,card.set, card.number.replace(/\D/g,''), 'near mint', card.variations])
+            database.none('INSERT INTO magic_inventory.cards (name, tcg_id, multiverse_id, set_code, set_name, collectors_number, variations) VALUES ($1, $2, $3, $4, $5, $6,$7)',
+                         [card.name, 0, card.multiverseid, card.setCode,card.set, card.number.replace(/\D/g,''), card.variations])
               .then(function() {})
               .catch(function(err) {
                 console.log(err)
