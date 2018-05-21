@@ -9,6 +9,7 @@ BEGIN;
 
 CREATE TABLE magic_inventory.orders(
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  order_number UUID NOT NULL,
   card_id UUID REFERENCES magic_inventory.cards(id),
   store_id UUID REFERENCES magic_inventory.stores(id),
   user_id UUID REFERENCES magic_inventory.users(id),
