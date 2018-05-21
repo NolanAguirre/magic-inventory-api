@@ -4,7 +4,7 @@
 BEGIN;
 
 CREATE TABLE magic_inventory.stores(
-  id UUID PRIMARY KEY,
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
   store_name citext,
   server_settings json,
   client_settings json

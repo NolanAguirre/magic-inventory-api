@@ -7,7 +7,7 @@
 BEGIN;
 
 CREATE TABLE magic_inventory.inventory(
-  id UUID PRIMARY KEY,
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
   card_id UUID REFERENCES magic_inventory.cards(id),
   store_id UUID REFERENCES magic_inventory.stores(id),
   condition magic_inventory.card_condition_type,

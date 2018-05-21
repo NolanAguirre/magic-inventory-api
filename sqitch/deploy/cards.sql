@@ -5,7 +5,7 @@
 BEGIN;
 
 CREATE TABLE magic_inventory.cards(
-  id UUID PRIMARY KEY,
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
   name citext,
   tcg_id integer,
   multiverse_id integer,

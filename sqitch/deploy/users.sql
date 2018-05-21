@@ -5,7 +5,7 @@
 BEGIN;
 
 CREATE TABLE magic_inventory.users(
-  id UUID PRIMARY KEY,
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
   auth0_id text,
   name citext,
   email citext
