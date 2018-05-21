@@ -2,30 +2,21 @@
 -- requires: types
 
 BEGIN;
--- -- used to get the complete data of a card from the given json object from an inventory
--- CREATE FUNCTION magic_inventory.create_magic_card(arg_card_data json) RETURNS magic_inventory.magic_card_type AS $$
---   DECLARE
---   tcg_id INTEGER;
---   set_name CITEXT;
---   collectors_number INTEGER;
---   BEGIN
---     tcg_id := (SELECT tcg_id FROM magic_inventory.inventory WHERE (card).name = $1.name AND (card).set_name = $1.card_set);
---     set_name := (SELECT set_name FROM magic_inventory.inventory WHERE (card).name = $1.name AND (card).set_name = $1.card_set);
---     collectors_number := (SELECT collectors_number FROM magic_inventory.inventory WHERE (card).name = $1.name AND (card).set_name = $1.card_set);
---     RETURN ROW($1.name, tcg_id, $1.set_code, set_name, collectors_number, $1.condition, $1.variations)::magic_inventory.magic_card_type;
---   END
--- $$ LANGUAGE PLPGSQL;
---
---
--- CREATE FUNCTION magic_inventory.typeahead(arg_card_name CITEXT) RETURNS SETOF magic_inventory.magic_card_type AS $$
---   BEGIN
---     RETURN QUERY SELECT 10 FROM magic_inventory.cards WHERE name = $1 + '%';
---   END;
--- $$ LANGUAGE PLPGSQL;
---
--- COMMENT ON FUNCTION magic_inventory.create_magic_card(json) is 'Internal use only.';
--- COMMENT ON FUNCTION magic_inventory.typeahead(CITEXT) is 'Typeahead query endpoint.';
 
+CREATE FUNCTION magic_inventory.typeahead(arg_card_name CITEXT) RETURNS SETOF CITEXT AS $$
+  BEGIN
+    RETURN QUERY SELECT DISTINCT name FROM magic_inventory.cards WHERE name LIKE $1 || '%' LIMIT 10;
+  END;
+$$ LANGUAGE PLPGSQL STABLE;
 
+COMMENT ON FUNCTION magic_inventory.typeahead(CITEXT) is 'Typeahead query function.';
 
 COMMIT;
+
+-- {
+--  	typeahead(argCardName:"a"){
+--     edges{
+--       node
+--     }
+--   }
+-- }
