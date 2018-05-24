@@ -7,13 +7,16 @@ const jwksRsa = require('jwks-rsa');
 const cors = require('cors');
 const db = require('./db');
 const fs = require('fs');
-db.updateSets(JSON.parse(fs.readFileSync('card_data/AllSetsFormatted.json', 'utf8')));
+const { postgraphile } = require("postgraphile");
+//db.updateSets(JSON.parse(fs.readFileSync('card_data/AllSetsFormatted.json', 'utf8')));
 if (!process.env.AUTH0_DOMAIN || !process.env.AUTH0_AUDIENCE) {
     throw 'Make sure you have AUTH0_DOMAIN, and AUTH0_AUDIENCE in your .env file'
 }
 
 app.use(cors());
 app.use(bodyParser.json());
+
+app.use(postgraphile(process.env.DATABASE_URL, "magic_inventory", {disableDefaultMutations:true, enableCors: true}));
 
 const checkJwt = jwt({
     // Dynamically provide a signing key based on the kid in the header and the singing keys provided by the JWKS endpoint.
