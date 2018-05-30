@@ -4,13 +4,8 @@ pgp.pg.defaults.ssl = true;
 var db = {};
 const fs = require('fs');
 var database = pgp(process.env.DATABASE_URL);
-db.queryInvetory = function(queryParams){
-    return database.many('SELECT * FROM inventory WHERE cardname = $1 AND storeid = $2', [queryParams.card.name, queryParams.store.id])
-        .then(function(data){
-            return data;
-        }).catch(function(err) {
-          return null;
-        });
+db.checkRole = function(auth0_id){
+  return database.one('SELECT role FROM magic_inventory.users WHERE auth_id = $1', auth_id)
 }
 db.typeahead = function(queryParams){
     let queryString;
