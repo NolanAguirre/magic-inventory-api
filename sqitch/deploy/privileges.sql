@@ -17,7 +17,7 @@ GRANT DELETE ON TABLE magic_inventory.inventory TO magic_inventory_employee, mag
 GRANT SELECT ON TABLE magic_inventory.orders TO magic_inventory_user, magic_inventory_employee, magic_inventory_store_owner;
 GRANT UPDATE ON TABLE magic_inventory.orders TO magic_inventory_employee, magic_inventory_store_owner; -- insert via function, trigger needed
 
-GRANT SELECT (store_name, id) ON TABLE magic_inventory.stores TO magic_inventory_user, magic_inventory_anonymous, magic_inventory_employee, magic_inventory_store_owner;
+GRANT SELECT (name, id) ON TABLE magic_inventory.stores TO magic_inventory_user, magic_inventory_anonymous, magic_inventory_employee, magic_inventory_store_owner;
 GRANT SELECT (client_settings), UPDATE (client_settings) ON TABLE magic_inventory.stores TO magic_inventory_employee, magic_inventory_store_owner;
 
 -- GRANT EXECUTE ON FUNCTION magic_inventory.add_user(CITEXT, TEXT, CITEXT) TO magic_inventory_user, magic_inventory_anonymous, magic_inventory_employee, magic_inventory_store_owner;
