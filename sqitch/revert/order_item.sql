@@ -2,6 +2,6 @@
 
 BEGIN;
 
--- XXX Add DDLs here.
+DROP TABLE magic_inventory.order_items;
 
 COMMIT;

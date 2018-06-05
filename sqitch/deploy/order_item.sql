@@ -9,11 +9,9 @@ BEGIN;
 
 CREATE TABLE magic_inventory.order_items(
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-  order_number UUID REFERENCES magic_inventory.orders(id),
-  card_id UUID REFERENCES magic_inventory.cards(id),
-  condition magic_inventory.card_condition_type,
-  price FLOAT,
-  CONSTRAINT order_item_key UNIQUE (order_number)
+  order_id UUID REFERENCES magic_inventory.orders(id),
+  inventory_id UUID REFERENCES magic_inventory.inventory(id),
+  CONSTRAINT order_item_key UNIQUE (order_id)
 );
 
 COMMIT;
