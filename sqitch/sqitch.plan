@@ -10,7 +10,6 @@ stores [appschema] 2018-04-23T22:09:54Z Nolan Aguirre <nolanaguirre08@gmail.com>
 cards [types appschema] 2018-04-23T18:54:51Z Nolan Aguirre <nolanaguirre08@gmail.com> # Add table for cards
 user_functions [users appschema types extensions] 2018-05-02T04:11:24Z Nolan,,, <nolan@nolan-Blade-Stealth> # add functions relating to the users table
 roles 2018-05-04T19:05:30Z Nolan,,, <nolan@nolan-Blade-Stealth> # Add roles for the database
-card_functions [types] 2018-05-07T05:01:34Z Nolan,,, <nolan@nolan-Blade-Stealth> # Create card functions migration
 store_functions [stores] 2018-05-14T01:56:23Z Nolan,,, <nolan@nolan-Blade-Stealth> # Add functions for store management
 inventory [stores cards types appschema] 2018-04-24T11:18:41Z Nolan Aguirre <nolanaguirre08@gmail.com> # Add inventory table
 orders [stores cards users types appschema] 2018-04-23T22:11:07Z Nolan Aguirre <nolanaguirre08@gmail.com> # Add orders table
