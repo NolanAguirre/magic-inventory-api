@@ -6,10 +6,9 @@ BEGIN;
 
 CREATE TABLE magic_inventory.users(
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-  role magic_inventory.role_type,
-  auth_id text,
-  name citext,
-  email citext
+  first_name CITEXT,
+  last_name CITEXT,
+  user_name CITEXT UNIQUE
 );
 COMMENT ON TABLE magic_inventory.users is 'Table of users and their data.';
 

@@ -3,31 +3,42 @@
 -- requires: appschema
 -- requires: types
 -- requires: extensions
+-- requires: users_private
 
 BEGIN;
 
--- --TODO remove return query, change to remove
--- CREATE FUNCTION magic_inventory.add_user(arg_user_name CITEXT,arg_user_id TEXT, arg_user_email CITEXT) RETURNS BOOLEAN AS $$
---   BEGIN
---     IF (SELECT EXISTS(SELECT 1 FROM magic_inventory.users WHERE (app_user).user_id = $2)) THEN
---       RETURN false;
---     ELSE
---       INSERT INTO magic_inventory.users VALUES (ROW($1, $2, $3)::magic_inventory.user_type);
---       IF (SELECT EXISTS(SELECT 1 FROM magic_inventory.users WHERE (app_user).user_id = $2)) THEN -- this maybe uneeded
---         RETURN true;
---       ELSE
---         RETURN false;
---       END IF;
---     END IF;
---   END
--- $$ LANGUAGE PLPGSQL;
---
--- CREATE FUNCTION magic_inventory.remove_user(arg_user_id TEXT) RETURNS void AS $$
---   DELETE FROM magic_inventory.users WHERE (app_user).user_id = $1;
--- $$ LANGUAGE SQL;
---
--- COMMENT ON FUNCTION magic_inventory.add_user(CITEXT, TEXT, CITEXT) is 'Adds a user to the use table, makes sure the user doesnt exists already';
--- COMMENT ON FUNCTION magic_inventory.remove_user(TEXT) is 'Removes a user from the user table';
+CREATE FUNCTION magic_inventory.register_user(
+    first_name citext,
+    last_name citext,
+    user_name citext,
+    email citext,
+    password text) RETURNS magic_inventory.users AS $$
+    DECLARE
+        person magic_inventory.users;
+    BEGIN
+        INSERT INTO magic_inventory.users (first_name, last_name, user_name) VALUES ($1, $2, $3) returning * into person;
+        INSERT INTO magic_inventory_private.users(user_id, email, password_hash, role) VALUES ((person).id, $4, crypt(password, gen_salt('bf')), 'magic_inventory_user');
+        RETURN person;
+    END;
+$$ LANGUAGE PLPGSQL STRICT SECURITY DEFINER;
+
+
+CREATE FUNCTION magic_inventory.authenticate(
+  CITEXT,
+  password text) RETURNS magic_inventory.jwt_token_type AS $$
+  DECLARE
+    person magic_inventory_private.users;
+    BEGIN
+        select a.* into person
+        from magic_inventory_private.users as a
+        where a.email = $1;
+        IF (person).password_hash = crypt(password, (person).password_hash) then
+            RETURN((person).role, null, null, (person).email)::magic_inventory.jwt_token_type;
+        ELSE
+            RETURN null;
+        END IF;
+    END;
+$$ LANGUAGE PLPGSQL STRICT SECURITY DEFINER;
 
 
 COMMIT;

@@ -12,6 +12,8 @@ DROP TYPE magic_inventory.order_status_type CASCADE;
 
 DROP TYPE magic_inventory.card_status_type CASCADE;
 
+DROP TYPE magic_inventory.jwt_token_type CASCADE;
+
 DROP TYPE magic_inventory.state_type CASCADE;
 
 COMMIT;

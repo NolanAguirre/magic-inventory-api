@@ -31,7 +31,7 @@ CREATE TYPE magic_inventory.card_status_type AS ENUM(
     'available',
     'preorder'
 );
-CREATE TYPE magic_inventory.order_status_type AS ENUM(
+CREATE TYPE magic_inventory.order_status_type AS ENUM( -- this needs to change
   'sent',
   'recived',
   'ready',
@@ -40,9 +40,17 @@ CREATE TYPE magic_inventory.order_status_type AS ENUM(
   'unfulfillable'
 );
 CREATE TYPE magic_inventory.role_type as ENUM(
-  'user',
-  'employee',
-  'store_owner'
+  'magic_inventory_anonymous',
+  'magic_inventory_user',
+  'magic_inventory_employee',
+  'magic_inventory_store_owner'
+);
+
+CREATE TYPE magic_inventory.jwt_token_type AS (
+  role magic_inventory.role_type,
+  expires_at integer,
+  store_id UUID,
+  email citext
 );
 
 CREATE TYPE magic_inventory.state_type AS ENUM(
