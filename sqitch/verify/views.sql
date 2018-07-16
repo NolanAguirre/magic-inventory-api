@@ -2,6 +2,4 @@
 
 BEGIN;
 
-DROP VIEW magic_inventory.card_name;
-
 ROLLBACK;
