@@ -5,7 +5,11 @@
 BEGIN;
 
 CREATE TABLE magic_inventory.users(
-  app_user magic_inventory.unique_name_user
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  first_name CITEXT,
+  last_name CITEXT,
+  user_name CITEXT UNIQUE
 );
+COMMENT ON TABLE magic_inventory.users is 'Table of users and their data.';
 
 COMMIT;

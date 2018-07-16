@@ -4,7 +4,7 @@
 
 BEGIN;
 
-CREATE TYPE magic_inventory.card_type AS ENUM(
+CREATE TYPE magic_inventory.card_type_type AS ENUM(
     'artifact',
     'creature',
     'enchantment',
@@ -14,7 +14,7 @@ CREATE TYPE magic_inventory.card_type AS ENUM(
     'sorcery'
 );
 
-CREATE TYPE magic_inventory.magic_card_condition AS ENUM(
+CREATE TYPE magic_inventory.card_condition_type AS ENUM(
     'mint',
     'near mint',
     'lightly played',
@@ -23,29 +23,87 @@ CREATE TYPE magic_inventory.magic_card_condition AS ENUM(
     'damaged'
 );
 
-CREATE TYPE magic_inventory.card_status AS ENUM(
-    'sold',
+CREATE TYPE magic_inventory.card_status_type AS ENUM(
     'ordered',
-    'hold',
+    'sold',
+    'requested',
+    'reference card',
     'available',
     'preorder'
 );
-
-CREATE TYPE magic_inventory.magic_card AS (
-    name citext,
-    tcg_id integer,
-    image text,
-    set_name citext,
-    set_code citext,
-    collectors_number integer,
-    condition magic_inventory.magic_card_condition,
-    variations integer[]
+CREATE TYPE magic_inventory.order_status_type AS ENUM( -- this needs to change
+  'sent',
+  'recived',
+  'ready',
+  'complete',
+  'cancled',
+  'unfulfillable'
+);
+CREATE TYPE magic_inventory.role_type as ENUM(
+  'magic_inventory_anonymous',
+  'magic_inventory_user',
+  'magic_inventory_employee',
+  'magic_inventory_store_owner'
 );
 
-CREATE TYPE magic_inventory.unique_name_user AS(
-    name citext,
-    user_id text,
-    email citext
+CREATE TYPE magic_inventory.jwt_token_type AS (
+  role magic_inventory.role_type,
+  expires_at integer,
+  store_id UUID,
+  email citext
+);
+
+CREATE TYPE magic_inventory.state_type AS ENUM(
+  'Alabama',
+  'Alaska',
+  'Arizona',
+  'Arkansas',
+  'California',
+  'Colorado',
+  'Connecticut',
+  'Delaware',
+  'Florida',
+  'Georgia',
+  'Hawaii',
+  'Idaho',
+  'Illinois',
+  'Indiana',
+  'Iowa',
+  'Kansas',
+  'Kentucky',
+  'Louisiana',
+  'Maine',
+  'Maryland',
+  'Massachusetts',
+  'Michigan',
+  'Minnesota',
+  'Mississippi',
+  'Missouri',
+  'Montana',
+  'Nebraska',
+  'Nevada',
+  'New Hampshire',
+  'New Jersey',
+  'New Mexico',
+  'New York',
+  'North Carolina',
+  'North Dakota',
+  'Ohio',
+  'Oklahoma',
+  'Oregon',
+  'Pennsylvania',
+  'Rhode Island',
+  'South Carolina',
+  'South Dakota',
+  'Tennessee',
+  'Texas',
+  'Utah',
+  'Vermont',
+  'Virginia',
+  'Washington',
+  'West Virginia',
+  'Wisconsin',
+  'Wyoming'
 );
 
 COMMIT;

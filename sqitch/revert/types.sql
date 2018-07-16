@@ -2,14 +2,18 @@
 
 BEGIN;
 
-DROP TYPE magic_inventory.card_type CASCADE;
+DROP TYPE magic_inventory.card_type_type CASCADE;
 
-DROP TYPE magic_inventory.card_condition CASCADE;
+DROP TYPE magic_inventory.card_condition_type CASCADE;
 
-DROP TYPE magic_inventory.magic_card CASCADE;
+DROP TYPE magic_inventory.role_type CASCADE;
 
-DROP TYPE magic_inventory.unique_name_user CASCADE;
+DROP TYPE magic_inventory.order_status_type CASCADE;
 
-DROP TYPE magic_inventory.card_status CASCADE;
+DROP TYPE magic_inventory.card_status_type CASCADE;
+
+DROP TYPE magic_inventory.jwt_token_type CASCADE;
+
+DROP TYPE magic_inventory.state_type CASCADE;
 
 COMMIT;
