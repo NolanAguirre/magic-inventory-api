@@ -21,3 +21,4 @@ order_item [users types cards stores orders] 2018-05-31T01:03:54Z Nolan,,, <nola
 views [cards] 2018-06-14T14:53:15Z Nolan,,, <nolan@nolan-Blade-Stealth> # add views migration
 current_setting_functions [appschema] 2018-07-01T01:17:31Z Nolan,,, <nolan@nolan-Blade-Stealth> # functions for reading current settings
 privileges [appschema roles inventory_functions] 2018-05-04T19:25:32Z Nolan,,, <nolan@nolan-Blade-Stealth> # Set up privileges for the roles
+buylist [cards stores] 2018-07-24T07:03:44Z Nolan,,, <nolan@nolan-Blade-Stealth> # add buylist migration
