@@ -15,10 +15,6 @@ CREATE TABLE magic_inventory.inventory(
   price FLOAT
 );
 
-ALTER TABLE magic_inventory.inventory ENABLE ROW LEVEL SECURITY;
-
-CREATE POLICY account_managers ON magic_inventory.inventory TO magic_inventory_employee USING ( = current_user);
-
 COMMENT ON TABLE magic_inventory.inventory is 'All the magic cards in stores inventory.';
 
 COMMIT;

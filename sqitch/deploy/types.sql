@@ -49,8 +49,7 @@ CREATE TYPE magic_inventory.role_type as ENUM(
 CREATE TYPE magic_inventory.jwt_token_type AS (
   role magic_inventory.role_type,
   expires_at integer,
-  store_id UUID,
-  email citext
+  id UUID
 );
 
 CREATE TYPE magic_inventory.state_type AS ENUM(
