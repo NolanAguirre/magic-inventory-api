@@ -1,6 +1,5 @@
 -- Deploy magic-inventory:cards to pg
--- requires: appschema
--- requires: card_type
+-- requires: types
 
 BEGIN;
 

@@ -1,7 +1,5 @@
 -- Deploy magic-inventory:users_private to pg
--- requires: appschema
 -- requires: users
--- requires: types
 
 BEGIN;
 

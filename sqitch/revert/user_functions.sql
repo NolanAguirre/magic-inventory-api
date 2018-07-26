@@ -2,14 +2,10 @@
 
 BEGIN;
 
-DROP FUNCTION magic_inventory.register_user(
-    first_name citext,
-    last_name citext,
-    user_name citext,
-    email citext,
-    password text);
+DROP FUNCTION magic_inventory.register_user(CITEXT, CITEXT, CITEXT, TEXT);
 
-DROP FUNCTION magic_inventory.authenticate(
-  email CITEXT,
-  password text);
+DROP FUNCTION magic_inventory.authenticate(CITEXT, TEXT);
+
+DROP FUNCTION magic_inventory.update_role(UUID, magic_inventory.role_type);
+
 COMMIT;

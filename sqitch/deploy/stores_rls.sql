@@ -1,5 +1,6 @@
 -- Deploy magic-inventory:stores_rls to pg
 -- requires: stores
+-- requires: admin_functions
 
 BEGIN;
 

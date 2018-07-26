@@ -1,5 +1,6 @@
--- Deploy magic-inventory:admins_functions to pg
+-- Deploy magic-inventory:admin_functions to pg
 -- requires: admins
+-- requires: user_functions
 
 BEGIN;
 

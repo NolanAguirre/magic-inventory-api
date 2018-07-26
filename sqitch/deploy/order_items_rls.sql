@@ -1,5 +1,6 @@
 -- Deploy magic-inventory:order_items_rls to pg
 -- requires: order_item
+-- requires: user_functions
 
 BEGIN;
 

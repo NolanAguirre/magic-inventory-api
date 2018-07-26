@@ -8,6 +8,17 @@ BEGIN;
 ALTER DEFAULT PRIVILEGES REVOKE EXECUTE ON functions FROM public;
 -- schema
 GRANT USAGE ON SCHEMA magic_inventory TO magic_inventory_user, magic_inventory_anonymous, magic_inventory_employee, magic_inventory_store_owner;
+-- functions
+GRANT EXECUTE ON FUNCTION citext_eq(citext, citext) TO magic_inventory_employee;
+GRANT EXECUTE ON FUNCTION texticlike(citext, citext) TO magic_inventory_employee;
+GRANT EXECUTE ON FUNCTION magic_inventory.get_role() TO magic_inventory_user, magic_inventory_anonymous, magic_inventory_employee, magic_inventory_store_owner;
+GRANT EXECUTE ON FUNCTION magic_inventory.authenticate(CITEXT, TEXT) TO magic_inventory_user, magic_inventory_anonymous, magic_inventory_employee, magic_inventory_store_owner;
+GRANT EXECUTE ON FUNCTION magic_inventory.register_user(CITEXT, CITEXT, CITEXT, TEXT) TO magic_inventory_anonymous;
+GRANT EXECUTE ON FUNCTION magic_inventory.inventory_typeahead(arg_one CITEXT , arg_two UUID) TO magic_inventory_user, magic_inventory_anonymous, magic_inventory_employee, magic_inventory_store_owner;
+GRANT EXECUTE ON FUNCTION magic_inventory.inventory_by_card_name_and_store_id(arg_one CITEXT, arg_two UUID) TO magic_inventory_user, magic_inventory_anonymous, magic_inventory_employee, magic_inventory_store_owner;
+-- views
+GRANT SELECT ON TABLE magic_inventory.card_name TO magic_inventory_user, magic_inventory_anonymous, magic_inventory_employee, magic_inventory_store_owner;
+GRANT SELECT ON TABLE magic_inventory.card_set TO magic_inventory_user, magic_inventory_anonymous, magic_inventory_employee, magic_inventory_store_owner;
 -- admins table
 GRANT INSERT, DELETE ON TABLE magic_inventory.admins TO magic_inventory_store_owner;
 -- cards table
@@ -26,8 +37,7 @@ GRANT INSERT ON TABLE magic_inventory.inventory TO magic_inventory_employee, mag
 GRANT UPDATE (status) ON TABLE magic_inventory.inventory TO magic_inventory_user, magic_inventory_employee, magic_inventory_store_owner;
 -- users table
 GRANT INSERT ON TABLE magic_inventory.users TO magic_inventory_anonymous;
---GRANT UPDATE (email) ON TABLE magic_inventory.users TO magic_inventory_user, magic_inventory_employee, magic_inventory_store_owner;
-GRANT SELECT (first_name, last_name, id) ON TABLE magic_inventory.users TO magic_inventory_store_owner;
+GRANT SELECT (first_name, last_name, id) ON TABLE magic_inventory.users TO magic_inventory_user, magic_inventory_employee, magic_inventory_store_owner;
 GRANT DELETE ON TABLE magic_inventory.users TO magic_inventory_user, magic_inventory_employee, magic_inventory_store_owner;
 -- row level needed:
 -- inventory, stores can only add and remove from their stores

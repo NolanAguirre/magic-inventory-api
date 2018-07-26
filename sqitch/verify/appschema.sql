@@ -4,4 +4,6 @@ BEGIN;
 
 SELECT 1/COUNT(*) FROM information_schema.schemata WHERE schema_name = 'magic_inventory';
 
+SELECT 1/COUNT(*) FROM information_schema.schemata WHERE schema_name = 'magic_inventory_private';
+
 ROLLBACK;

@@ -1,11 +1,11 @@
 -- Deploy magic-inventory:stores to pg
--- requires: appschema
+-- requires: types
 
 BEGIN;
 
 CREATE TABLE magic_inventory.stores(
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-  email CITEXT,
+  email CITEXT UNIQUE CHECK(email ~* '^.+@.+\..+$'),
   phone_number varchar(10),
   name citext,
   city CITEXT,

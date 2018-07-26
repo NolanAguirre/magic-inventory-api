@@ -1,8 +1,7 @@
 -- Deploy magic-inventory:inventory to pg
--- requires: appschema
--- requires: types
 -- requires: cards
 -- requires: stores
+-- requires: admin
 
 BEGIN;
 

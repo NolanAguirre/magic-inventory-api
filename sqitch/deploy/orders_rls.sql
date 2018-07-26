@@ -1,5 +1,6 @@
 -- Deploy magic-inventory:orders_rls to pg
 -- requires: orders
+-- requires: admin_functions
 
 BEGIN;
 

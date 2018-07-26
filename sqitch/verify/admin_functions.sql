@@ -1,4 +1,4 @@
--- Verify magic-inventory:admins_functions on pg
+-- Verify magic-inventory:admin_functions on pg
 
 BEGIN;
 

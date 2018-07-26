@@ -1,6 +1,4 @@
 -- Deploy magic-inventory:orders to pg
--- requires: appschema
--- requires: types
 -- requires: cards
 -- requires: stores
 -- requires: users

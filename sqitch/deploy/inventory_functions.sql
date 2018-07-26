@@ -1,6 +1,5 @@
 -- Deploy magic-inventory:inventory_functions to pg
 -- requires: inventory
--- require: cards
 
 BEGIN;
 

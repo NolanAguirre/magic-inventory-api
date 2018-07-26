@@ -21,9 +21,10 @@ app.use(postgraphile(process.env.DATABASE_URL, "magic_inventory", {
     enableCors: true,
     graphiql: true,
     appendPlugins: [PostGraphileConnectionFilterPlugin],
+    pgDefaultRole: "magic_inventory_anonymous",
     jwtPgTypeIdentifier: "magic_inventory.jwt_token_type",
     jwtSecret: "supersecretphrase" //totally the top secret password
 }));
 
 app.listen(3002);
-console.log('Listening on http://localhost:3021');
+console.log('Listening on http://localhost:3002');
