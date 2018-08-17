@@ -41,12 +41,21 @@ CREATE FUNCTION magic_inventory.update_role(UUID, magic_inventory.role_type) RET
     UPDATE magic_inventory_private.users SET role = $2 WHERE user_id = $1;
 $$ LANGUAGE SQL STRICT SECURITY DEFINER;
 
+CREATE FUNCTION magic_inventory.get_user_data() RETURNS magic_inventory.user_type AS $$
+    DECLARE
+        person magic_inventory.users;
+    BEGIN
+        select a.* into person from magic_inventory.users as a where a.id = magic_inventory.get_id();
+        SELECT ROW(person.first_name, person.last_name, magic_inventory.get_admin_store(), magic_inventory.get_role(), current_setting('jwt.claims.expires_at', true), magic_inventory.get_id());
+    END;
+$$ LANGUAGE PLPGSQL STABLE;
+
 CREATE FUNCTION magic_inventory.get_role() RETURNS magic_inventory.role_type AS $$
     SELECT nullif(current_setting('jwt.claims.role', true),'')::magic_inventory.role_type;
-$$ LANGUAGE SQL STABLE;
+$$ LANGUAGE SQL;
 
 CREATE FUNCTION magic_inventory.get_id() RETURNS UUID AS $$
     SELECT uuid(current_setting('jwt.claims.id', true));
-$$ LANGUAGE SQL STABLE;
+$$ LANGUAGE SQL;
 
 COMMIT;

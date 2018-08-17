@@ -52,6 +52,15 @@ CREATE TYPE magic_inventory.jwt_token_type AS (
   id UUID
 );
 
+CREATE TYPE magic_inventory.user_type AS (
+    first_name CITEXT,
+    last_name CITEXT,
+    store UUID,
+    role magic_inventory.role_type,
+    expires_at INTEGER
+    id UUID,
+);
+
 CREATE TYPE magic_inventory.state_type AS ENUM(
   'Alabama',
   'Alaska',
