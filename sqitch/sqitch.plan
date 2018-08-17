@@ -8,15 +8,15 @@ extensions 2018-04-24T11:42:02Z Nolan Aguirre <nolanaguirre08@gmail.com> # Add e
 
 users           [extensions] 2018-04-23T18:38:43Z Nolan Aguirre <nolanaguirre08@gmail.com> # Add table of users
 types           [extensions roles] 2018-04-23T20:33:33Z Nolan Aguirre <nolanaguirre08@gmail.com> # Add type migration
-stores          [types] 2018-04-23T22:09:54Z Nolan Aguirre <nolanaguirre08@gmail.com> # Add stores table
 cards           [types] 2018-04-23T18:54:51Z Nolan Aguirre <nolanaguirre08@gmail.com> # Add table for cards
-views           [cards] 2018-06-14T14:53:15Z Nolan Aguirre <nolanaguirre08@gmail.com> # add views migration
+stores          [types] 2018-04-23T22:09:54Z Nolan Aguirre <nolanaguirre08@gmail.com> # Add stores table
 users_private   [users] 2018-07-14T19:31:54Z Nolan Aguirre <nolanaguirre08@gmail.com> # Add users for private schema
 admins          [users stores] 2018-05-17T01:10:23Z Nolan Aguirre <nolanaguirre08@gmail.com> # Add amins table
 inventory       [cards stores] 2018-04-24T11:18:41Z Nolan Aguirre <nolanaguirre08@gmail.com> # Add inventory table
 buylist         [cards stores] 2018-07-24T07:03:44Z Nolan Aguirre <nolanaguirre08@gmail.com> # add buylist migration
 orders          [cards stores users] 2018-04-23T22:11:07Z Nolan Aguirre <nolanaguirre08@gmail.com> # Add orders table
 order_item      [inventory orders] 2018-05-31T01:03:54Z Nolan Aguirre <nolanaguirre08@gmail.com> # add order item table
+views           [cards inventory] 2018-06-14T14:53:15Z Nolan Aguirre <nolanaguirre08@gmail.com> # add views migration
 
 inventory_functions [inventory] 2018-05-07T04:41:53Z Nolan Aguirre <nolanaguirre08@gmail.com> # Add inventory functions migration
 user_functions      [users_private] 2018-05-02T04:11:24Z Nolan Aguirre <nolanaguirre08@gmail.com> # add functions relating to the users table
@@ -28,5 +28,5 @@ admins_rls      [admin_functions] 2018-07-25T20:23:09Z Nolan Aguirre <nolanaguir
 stores_rls      [admin_functions stores] 2018-07-25T20:21:23Z Nolan Aguirre <nolanaguirre08@gmail.com> # Stores table row level security
 buylist_rls     [admin_functions buylist] 2018-07-25T20:24:11Z Nolan Aguirre <nolanaguirre08@gmail.com> # Buylist table row level security
 inventory_rls   [admin_functions inventory] 2018-07-25T20:25:19Z Nolan Aguirre <nolanaguirre08@gmail.com> # Inventory table row level security
-orders_rls      [admin_functions orders] 2018-07-25T20:45:14Z Nolan Aguirre <nolanaguirre08@gmail.com> # Orders table row level security
 order_items_rls [user_functions order_item] 2018-07-25T21:02:30Z Nolan Aguirre <nolanaguirre08@gmail.com> # Order Items table row level security
+orders_rls      [admin_functions orders] 2018-07-25T20:45:14Z Nolan Aguirre <nolanaguirre08@gmail.com> # Orders table row level security
