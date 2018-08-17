@@ -39,7 +39,7 @@ $$ LANGUAGE PLPGSQL STRICT SECURITY DEFINER;
 
 CREATE FUNCTION magic_inventory.update_role(UUID, magic_inventory.role_type) RETURNS VOID AS $$
     UPDATE magic_inventory_private.users SET role = $2 WHERE user_id = $1;
-$$ LANGUAGE SQL STRICT;
+$$ LANGUAGE SQL STRICT SECURITY DEFINER;
 
 CREATE FUNCTION magic_inventory.get_role() RETURNS magic_inventory.role_type AS $$
     SELECT nullif(current_setting('jwt.claims.role', true),'')::magic_inventory.role_type;
@@ -47,6 +47,6 @@ $$ LANGUAGE SQL STABLE;
 
 CREATE FUNCTION magic_inventory.get_id() RETURNS UUID AS $$
     SELECT uuid(current_setting('jwt.claims.id', true));
-$$ LANGUAGE SQL SECURITY DEFINER;
+$$ LANGUAGE SQL STABLE;
 
 COMMIT;
