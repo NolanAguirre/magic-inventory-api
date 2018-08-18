@@ -46,7 +46,7 @@ CREATE FUNCTION magic_inventory.get_user_data() RETURNS magic_inventory.user_typ
         person magic_inventory.users;
     BEGIN
         select a.* into person from magic_inventory.users as a where a.id = magic_inventory.get_id();
-        SELECT ROW(person.first_name, person.last_name, magic_inventory.get_admin_store(), magic_inventory.get_role(), current_setting('jwt.claims.expires_at', true), magic_inventory.get_id());
+        RETURN ROW(person.first_name, person.last_name, magic_inventory.get_admin_store(), magic_inventory.get_role(), current_setting('jwt.claims.expires_at', true), magic_inventory.get_id())::magic_inventory.user_type;
     END;
 $$ LANGUAGE PLPGSQL STABLE;
 

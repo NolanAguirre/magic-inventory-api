@@ -21,6 +21,8 @@ GRANT EXECUTE ON FUNCTION magic_inventory.inventory_by_card_name_and_store_id(ar
 GRANT EXECUTE ON FUNCTION magic_inventory.update_role(UUID, magic_inventory.role_type) TO magic_inventory_user, magic_inventory_employee, magic_inventory_store_owner;
 GRANT EXECUTE ON FUNCTION magic_inventory.get_id() TO magic_inventory_user, magic_inventory_employee, magic_inventory_store_owner;
 GRANT EXECUTE ON FUNCTION magic_inventory.get_admin_store() TO magic_inventory_employee, magic_inventory_store_owner;
+GRANT EXECUTE ON FUNCTION magic_inventory.get_user_data() TO magic_inventory_employee, magic_inventory_store_owner, magic_inventory_user;
+
 -- views
 GRANT SELECT ON TABLE magic_inventory.card_name TO magic_inventory_user, magic_inventory_anonymous, magic_inventory_employee, magic_inventory_store_owner;
 GRANT SELECT ON TABLE magic_inventory.card_set TO magic_inventory_user, magic_inventory_anonymous, magic_inventory_employee, magic_inventory_store_owner;
