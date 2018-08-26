@@ -9,19 +9,27 @@ ALTER DEFAULT PRIVILEGES REVOKE EXECUTE ON functions FROM public;
 -- schema
 GRANT USAGE ON SCHEMA magic_inventory TO magic_inventory_user, magic_inventory_anonymous, magic_inventory_employee, magic_inventory_store_owner;
 -- functions
+--  These are default functions of extensions
 GRANT EXECUTE ON FUNCTION citext_eq(citext, citext) TO magic_inventory_user, magic_inventory_anonymous, magic_inventory_employee, magic_inventory_store_owner;
 GRANT EXECUTE ON FUNCTION texticregexeq (citext, citext) TO magic_inventory_user, magic_inventory_anonymous, magic_inventory_employee, magic_inventory_store_owner;
 GRANT EXECUTE ON FUNCTION uuid_generate_v4() TO magic_inventory_user, magic_inventory_anonymous, magic_inventory_employee, magic_inventory_store_owner;
 GRANT EXECUTE ON FUNCTION texticlike(citext, citext) TO magic_inventory_user, magic_inventory_anonymous, magic_inventory_employee, magic_inventory_store_owner;
-GRANT EXECUTE ON FUNCTION magic_inventory.get_role() TO magic_inventory_user, magic_inventory_anonymous, magic_inventory_employee, magic_inventory_store_owner;
-GRANT EXECUTE ON FUNCTION magic_inventory.authenticate(CITEXT, TEXT) TO magic_inventory_user, magic_inventory_anonymous, magic_inventory_employee, magic_inventory_store_owner;
+--  These are for anonymous users only
 GRANT EXECUTE ON FUNCTION magic_inventory.register_user(CITEXT, CITEXT, CITEXT, TEXT) TO magic_inventory_anonymous;
-GRANT EXECUTE ON FUNCTION magic_inventory.inventory_typeahead(arg_one CITEXT , arg_two UUID) TO magic_inventory_user, magic_inventory_anonymous, magic_inventory_employee, magic_inventory_store_owner;
-GRANT EXECUTE ON FUNCTION magic_inventory.inventory_by_card_name_and_store_id(arg_one CITEXT, arg_two UUID) TO magic_inventory_user, magic_inventory_anonymous, magic_inventory_employee, magic_inventory_store_owner;
+--  These are for admins only
+GRANT EXECUTE ON  magic_inventory.inventory_typeahead(arg_one CITEXT) TO magic_inventory_employee, magic_inventory_store_owner;
+GRANT EXECUTE ON  magic_inventory.inventory_by_card_name_and_store_id(arg_one CITEXT) TO magic_inventory_employee, magic_inventory_store_owner;
+GRANT EXECUTE ON  magic_inventory.add_inventory(UUID, magic_inventory.card_condition_type, magic_inventory.card_status_type, FLOAT) TO magic_inventory_employee, magic_inventory_store_owner;
+GRANT EXECUTE ON FUNCTION magic_inventory.get_admin_store() TO magic_inventory_employee, magic_inventory_store_owner;
+--  These are for all registered users
 GRANT EXECUTE ON FUNCTION magic_inventory.update_role(UUID, magic_inventory.role_type) TO magic_inventory_user, magic_inventory_employee, magic_inventory_store_owner;
 GRANT EXECUTE ON FUNCTION magic_inventory.get_id() TO magic_inventory_user, magic_inventory_employee, magic_inventory_store_owner;
-GRANT EXECUTE ON FUNCTION magic_inventory.get_admin_store() TO magic_inventory_employee, magic_inventory_store_owner;
 GRANT EXECUTE ON FUNCTION magic_inventory.get_user_data() TO magic_inventory_employee, magic_inventory_store_owner, magic_inventory_user;
+--  These are for everyone
+GRANT EXECUTE ON FUNCTION magic_inventory.get_role() TO magic_inventory_user, magic_inventory_anonymous, magic_inventory_employee, magic_inventory_store_owner;
+GRANT EXECUTE ON FUNCTION magic_inventory.authenticate(CITEXT, TEXT) TO magic_inventory_user, magic_inventory_anonymous, magic_inventory_employee, magic_inventory_store_owner;
+GRANT EXECUTE ON FUNCTION magic_inventory.inventory_typeahead(arg_one CITEXT , arg_two UUID) TO magic_inventory_user, magic_inventory_anonymous, magic_inventory_employee, magic_inventory_store_owner;
+GRANT EXECUTE ON FUNCTION magic_inventory.inventory_by_card_name_and_store_id(arg_one CITEXT, arg_two UUID) TO magic_inventory_user, magic_inventory_anonymous, magic_inventory_employee, magic_inventory_store_owner;
 
 -- views
 GRANT SELECT ON TABLE magic_inventory.card_name TO magic_inventory_user, magic_inventory_anonymous, magic_inventory_employee, magic_inventory_store_owner;
