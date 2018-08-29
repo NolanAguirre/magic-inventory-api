@@ -9,7 +9,7 @@ const db = require('./db');
 const fs = require('fs');
 const {postgraphile} = require("postgraphile");
 const PostGraphileConnectionFilterPlugin = require("postgraphile-plugin-connection-filter");
-//db.updateSets(JSON.parse(fs.readFileSync('card_data/AllSetsFormatted.json', 'utf8')));
+
 if (!process.env.AUTH0_DOMAIN || !process.env.AUTH0_AUDIENCE) {
     throw 'Make sure you have AUTH0_DOMAIN, and AUTH0_AUDIENCE in your .env file'
 }
@@ -25,6 +25,10 @@ app.use(postgraphile(process.env.DATABASE_URL, "magic_inventory", {
     jwtPgTypeIdentifier: "magic_inventory.jwt_token_type",
     jwtSecret: "supersecretphrase" //totally the top secret password
 }));
+app.post('/api/update', function(req, res) {
+    db.updateSets(JSON.parse(fs.readFileSync('card_data/AllSetsFormatted.json', 'utf8')));
+    res.json({messsage:"updating cards"});
+});
 
 app.listen(3002);
 console.log('Listening on http://localhost:3002');
