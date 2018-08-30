@@ -18,9 +18,9 @@ orders          [cards stores users] 2018-04-23T22:11:07Z Nolan Aguirre <nolanag
 order_item      [inventory orders] 2018-05-31T01:03:54Z Nolan Aguirre <nolanaguirre08@gmail.com> # add order item table
 views           [cards inventory] 2018-06-14T14:53:15Z Nolan Aguirre <nolanaguirre08@gmail.com> # add views migration
 
-inventory_functions [inventory] 2018-05-07T04:41:53Z Nolan Aguirre <nolanaguirre08@gmail.com> # Add inventory functions migration
 user_functions      [users_private] 2018-05-02T04:11:24Z Nolan Aguirre <nolanaguirre08@gmail.com> # add functions relating to the users table
 admin_functions     [admins user_functions] 2018-07-25T21:04:04Z Nolan Aguirre <nolanaguirre08@gmail.com> # Admin function mingration
+inventory_functions [inventory admin_functions] 2018-05-07T04:41:53Z Nolan Aguirre <nolanaguirre08@gmail.com> # Add inventory functions migration
 
 privileges [roles] 2018-05-04T19:25:32Z Nolan Aguirre <nolanaguirre08@gmail.com> # Set up privileges for the roles
 

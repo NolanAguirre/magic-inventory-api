@@ -15,17 +15,17 @@ CREATE FUNCTION magic_inventory.inventory_by_card_name_and_store_id(arg_one CITE
   END;
 $$ LANGUAGE PLPGSQL STABLE;
 
-CREATE FUNCTION magic_inventory.add_inventory(UUID, magic_inventory.card_condition_type, magic_inventory.card_status_type, FLOAT) RETURNS VOID AS $$
+CREATE FUNCTION magic_inventory.admin_add_inventory(UUID, magic_inventory.card_condition_type, magic_inventory.card_status_type, FLOAT) RETURNS VOID AS $$
     INSERT INTO magic_inventory.inventory (card_id, store_id, condition,status, price) VALUES ($1, magic_inventory.get_admin_store(), $2,$3,$4);
 $$ LANGUAGE SQL STRICT;
 
-CREATE FUNCTION magic_inventory.inventory_typeahead(arg_one CITEXT) RETURNS SETOF CITEXT AS $$ -- used for the client
+CREATE FUNCTION magic_inventory.admin_inventory_typeahead(arg_one CITEXT) RETURNS SETOF CITEXT AS $$ -- used for the client
   BEGIN
     RETURN QUERY SELECT * FROM magic_inventory.inventory_typeahead($1, magic_inventory.get_admin_store());
   END;
 $$ LANGUAGE PLPGSQL STABLE;
 
-CREATE FUNCTION magic_inventory.inventory_by_card_name_and_store_id(arg_one CITEXT) RETURNS SETOF magic_inventory.inventory AS $$ -- used for the client
+CREATE FUNCTION magic_inventory.admin_inventory_by_card_name_and_store_id(arg_one CITEXT) RETURNS SETOF magic_inventory.inventory AS $$ -- used for the client
   BEGIN
   RETURN QUERY SELECT * FROM magic_inventory.inventory_by_card_name_and_store_id($1, magic_inventory.get_admin_store());
   END;

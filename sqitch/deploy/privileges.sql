@@ -17,9 +17,9 @@ GRANT EXECUTE ON FUNCTION texticlike(citext, citext) TO magic_inventory_user, ma
 --  These are for anonymous users only
 GRANT EXECUTE ON FUNCTION magic_inventory.register_user(CITEXT, CITEXT, CITEXT, TEXT) TO magic_inventory_anonymous;
 --  These are for admins only
-GRANT EXECUTE ON  magic_inventory.inventory_typeahead(arg_one CITEXT) TO magic_inventory_employee, magic_inventory_store_owner;
-GRANT EXECUTE ON  magic_inventory.inventory_by_card_name_and_store_id(arg_one CITEXT) TO magic_inventory_employee, magic_inventory_store_owner;
-GRANT EXECUTE ON  magic_inventory.add_inventory(UUID, magic_inventory.card_condition_type, magic_inventory.card_status_type, FLOAT) TO magic_inventory_employee, magic_inventory_store_owner;
+GRANT EXECUTE ON FUNCTION magic_inventory.admin_inventory_typeahead(arg_one CITEXT) TO magic_inventory_employee, magic_inventory_store_owner;
+GRANT EXECUTE ON FUNCTION magic_inventory.admin_inventory_by_card_name_and_store_id(arg_one CITEXT) TO magic_inventory_employee, magic_inventory_store_owner;
+GRANT EXECUTE ON FUNCTION magic_inventory.admin_add_inventory(UUID, magic_inventory.card_condition_type, magic_inventory.card_status_type, FLOAT) TO magic_inventory_employee, magic_inventory_store_owner;
 GRANT EXECUTE ON FUNCTION magic_inventory.get_admin_store() TO magic_inventory_employee, magic_inventory_store_owner;
 --  These are for all registered users
 GRANT EXECUTE ON FUNCTION magic_inventory.update_role(UUID, magic_inventory.role_type) TO magic_inventory_user, magic_inventory_employee, magic_inventory_store_owner;
