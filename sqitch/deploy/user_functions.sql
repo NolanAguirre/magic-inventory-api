@@ -30,7 +30,7 @@ CREATE OR REPLACE FUNCTION magic_inventory.authenticate(CITEXT, password text) R
         from magic_inventory.users as a
         where a.id = person.user_id;
         IF (person).password_hash = crypt(password, (person).password_hash) then
-            RETURN((person).role, null, (public_person).id)::magic_inventory.jwt_token_type;
+            RETURN((person).role, SELECT (extract(epoch from (now()+'14 day'::interval)))::integer, (public_person).id)::magic_inventory.jwt_token_type;
         ELSE
             RETURN null;
         END IF;
@@ -46,7 +46,7 @@ CREATE FUNCTION magic_inventory.get_user_data() RETURNS magic_inventory.user_typ
         person magic_inventory.users;
     BEGIN
         select a.* into person from magic_inventory.users as a where a.id = magic_inventory.get_id();
-        RETURN ROW(person.first_name, person.last_name, magic_inventory.get_admin_store(), magic_inventory.get_role(), current_setting('jwt.claims.expires_at', true), magic_inventory.get_id())::magic_inventory.user_type;
+        RETURN ROW(person.first_name, person.last_name, magic_inventory.get_admin_store(), magic_inventory.get_role(), current_setting('jwt.claims.expires_at', true)::integer, magic_inventory.get_id())::magic_inventory.user_type;
     END;
 $$ LANGUAGE PLPGSQL STABLE;
 
