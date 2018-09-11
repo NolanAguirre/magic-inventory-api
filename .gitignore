@@ -1,4 +1,3 @@
 .env
 /node_modules
-/card_data
-sqitch.conf
+sqitch/sqitch.conf
